@@ -7,7 +7,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Constants;
 
 /**
  * Add your docs here.
@@ -15,6 +19,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class FrontIntake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  Solenoid intakeSol;
+  WPI_VictorSPX leftIntakeMotor;
+  WPI_VictorSPX rightIntakeMotor;
+
+  public FrontIntake(){
+    intakeSol = new Solenoid(Constants.intakeSol);
+    leftIntakeMotor = new WPI_VictorSPX(Constants.leftIntakeMotor);
+    rightIntakeMotor = new WPI_VictorSPX(Constants.rightIntakeMotor);
+  }
+
+
 
   @Override
   public void initDefaultCommand() {
