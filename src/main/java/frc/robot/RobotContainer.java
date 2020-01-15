@@ -8,10 +8,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.FrontIntake;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -22,16 +27,44 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public static Drivetrain m_drivetrain = new Drivetrain();
+  public static Climber m_climber = new Climber();
+  public static FrontIntake m_frontIntake = new FrontIntake();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  public static Joystick controller;
+  public static JoystickButton aButton;
+  public static JoystickButton bButton;
+  public static JoystickButton xButton;
+  public static JoystickButton yButton;
+  public static JoystickButton leftBumperButton;
+  public static JoystickButton rightBumperButton;
+  public static JoystickButton leftMiniButton;
+  public static JoystickButton rightMiniButton;
+  public static JoystickButton leftStickButton;
+  public static JoystickButton rightStickButton;
 
+  public static XboxController xController;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
+    controller = new Joystick(0);
+    aButton = new JoystickButton(controller, 1);
+    bButton = new JoystickButton(controller, 2);
+    xButton = new JoystickButton(controller, 3);
+    yButton = new JoystickButton(controller, 4);
+    leftBumperButton = new JoystickButton(controller, 5);
+    rightBumperButton = new JoystickButton(controller, 6);
+    leftMiniButton = new JoystickButton(controller, 7);
+    rightMiniButton = new JoystickButton(controller, 8);
+    leftStickButton = new JoystickButton(controller, 9);
+    rightStickButton = new JoystickButton(controller, 10);
+    xController = new XboxController(0);
+
     configureButtonBindings();
   }
 

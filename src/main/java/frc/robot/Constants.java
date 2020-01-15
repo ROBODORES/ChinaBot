@@ -24,11 +24,9 @@ public final class Constants {
     public static int rightSlaveMotor = 3;
 
     //Climber
-    public static int climberSol1 = 0;
-    public static int climberSol2 = 1;
-    public static int climberSol3 = 2;
-    public static int climberSol4 = 3;
-
+    public static int lowerClimberSol = 0;
+    public static int higherClimberSol = 1;
+    
     //Front Intake
     public static int intakeSol = 0;
     public static int leftIntakeMotor = 0;

@@ -29,7 +29,19 @@ public class FrontIntake extends Subsystem {
     rightIntakeMotor = new WPI_VictorSPX(Constants.rightIntakeMotor);
   }
 
+  public void lower(){
+    intakeSol.set(false);
+  }
 
+  public void intake(){
+    leftIntakeMotor.set(0.7);
+    rightIntakeMotor.set(0.7);
+  }
+
+  public void outtake(){
+    leftIntakeMotor.set(-0.7);
+    rightIntakeMotor.set(-0.7);
+  }
 
   @Override
   public void initDefaultCommand() {

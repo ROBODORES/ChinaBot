@@ -17,26 +17,21 @@ import frc.robot.Constants;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  Solenoid climbSol1;
-  Solenoid climbSol2;
-  Solenoid climbSol3;
-  Solenoid climbSol4;
+  Solenoid lowerClimbSol;
+  Solenoid higherClimbSol;
 
   public Climber(){
-    climbSol1 = new Solenoid(Constants.climberSol1);
-    climbSol2 = new Solenoid(Constants.climberSol2);
-    climbSol3 = new Solenoid(Constants.climberSol3);
-    climbSol4 = new Solenoid(Constants.climberSol4);
+    lowerClimbSol = new Solenoid(Constants.lowerClimberSol);
+    higherClimbSol = new Solenoid(Constants.higherClimberSol);
+ 
   }
 
   public void firstExtension(){
-    climbSol1.set(true);
-    climbSol2.set(true);
+    lowerClimbSol.set(true);
   }
 
   public void secondExtension(){
-    climbSol3.set(true);
-    climbSol4.set(true);
+    higherClimbSol.set(true);
   }
   @Override
   public void initDefaultCommand() {
