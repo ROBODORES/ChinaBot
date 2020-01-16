@@ -7,18 +7,37 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Add your docs here.
  */
-public class Conveyor extends Subsystem {
+public class Conveyor extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  WPI_VictorSPX topMotor;
+  WPI_VictorSPX bottomMotor;
+  Solenoid stopper;
+  public static boolean close = false;
+  public static boolean open = true;
+  
+  public Conveyor(){
+    topMotor = new WPI_VictorSPX(Constants.topMotor);
+    bottomMotor = new WPI_VictorSPX(Constants.bottomMotor);
+    stopper = new Solenoid(Constants.stopper);
+  }
 
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  public void setMotors(double speed){
+    topMotor.set(speed);
+    bottomMotor.set(speed);
+  }
+
+  public void setStopper(boolean state){
+    stopper.set(state);
   }
 }

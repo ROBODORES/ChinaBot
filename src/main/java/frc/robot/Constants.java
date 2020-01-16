@@ -24,11 +24,19 @@ public final class Constants {
     public static int rightSlaveMotor = 3;
 
     //Climber
-    public static int lowerClimberSol = 0;
-    public static int higherClimberSol = 1;
+    public static int forwardChannel = 0;
+    public static int reverseChannel = 1;
     
     //Front Intake
     public static int intakeSol = 0;
     public static int leftIntakeMotor = 0;
     public static int rightIntakeMotor = 1;
+
+    //Conveyor
+    public static int bottomMotor = 0;
+    public static int topMotor = 1;
+    public static int stopper = 0;
+
+    //LEDs
+    public static int blinkinPort = 0;
 }
