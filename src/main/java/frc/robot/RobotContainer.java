@@ -29,12 +29,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Climber m_climber = new Climber();
-  private final FrontIntake m_frontIntake = new FrontIntake();
-  private final Conveyor m_conveyor = new Conveyor();
+  //private final Climber m_climber = new Climber();
+  //private final FrontIntake m_frontIntake = new FrontIntake();
+  //private final Conveyor m_conveyor = new Conveyor();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final Test m_test = new Test(m_conveyor, m_frontIntake);
+  //private final Test m_test = new Test(m_conveyor, m_frontIntake);
   //public static Deploy deploy = new Deploy();
 
   public static Joystick controller;
@@ -79,7 +79,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller, 6).whileHeld(m_test);//anger
+    //new JoystickButton(controller, 6).whileHeld(m_test);//anger
   }
 
 

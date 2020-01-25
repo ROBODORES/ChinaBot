@@ -20,24 +20,43 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class Conveyor extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  WPI_VictorSPX topMotor;
-  WPI_VictorSPX bottomMotor;
+  WPI_VictorSPX topConveyorMotor;
+  WPI_VictorSPX bottomConveyorMotor;
   Solenoid stopper;
   public static boolean close = false;
   public static boolean open = true;
+
+  Solenoid intakeSol;
+  WPI_VictorSPX leftIntakeMotor;
+  WPI_VictorSPX rightIntakeMotor;
+  public static boolean up = false;
+  public static boolean down = true;
   
   public Conveyor(){
-    topMotor = new WPI_VictorSPX(Constants.topMotor);
-    bottomMotor = new WPI_VictorSPX(Constants.bottomMotor);
+    topConveyorMotor = new WPI_VictorSPX(Constants.topMotor);
+    bottomConveyorMotor = new WPI_VictorSPX(Constants.bottomMotor);
     stopper = new Solenoid(Constants.stopper);
+
+    intakeSol = new Solenoid(Constants.intakeSol);
+    leftIntakeMotor = new WPI_VictorSPX(Constants.leftIntakeMotor);
+    rightIntakeMotor = new WPI_VictorSPX(Constants.rightIntakeMotor);
   }
 
-  public void setMotors(double speed){
-    topMotor.set(speed);
-    bottomMotor.set(speed);
+  public void setConveyorMotors(double speed){
+    topConveyorMotor.set(speed);
+    bottomConveyorMotor.set(speed);
   }
 
   public void setStopper(boolean state){
     stopper.set(state);
+  }
+
+  public void setIntake(boolean state){
+    intakeSol.set(state);
+  }
+
+  public void setIntakeMotors(double speed){
+    leftIntakeMotor.set(speed);
+    rightIntakeMotor.set(speed);
   }
 }
