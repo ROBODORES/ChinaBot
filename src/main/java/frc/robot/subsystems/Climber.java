@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,7 +21,9 @@ import frc.robot.Constants;
 public class Climber extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  DoubleSolenoid climbSol;
+  DoubleSolenoid climbSol; 
+  WPI_VictorSPX leftClimbMotor; 
+  WPI_VictorSPX rightClimbMotor; 
 
   public Climber(){
     climbSol = new DoubleSolenoid(Constants.forwardChannel, Constants.reverseChannel);

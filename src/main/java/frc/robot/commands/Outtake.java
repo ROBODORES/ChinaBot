@@ -9,37 +9,35 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.Conveyor;
+import frc.robot.Robot;
 
-public class Stop extends CommandBase {
+
+public class Outtake extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Conveyor m_conveyor;
 
   /**
    * Creates a new Test.
    */
-  public Stop(final Conveyor conveyor) {
+  public Outtake(final Conveyor conveyor) {
     m_conveyor = conveyor;
     // here to declare subsystem dependencies.
     addRequirements(conveyor);
   }
-
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
+    m_conveyor.setStopper(m_conveyor.close);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_conveyor.setStopper(m_conveyor.close);
-    m_conveyor.setConveyorMotors(0.0);
-    m_conveyor.setIntakeMotors(0.0);
-    m_conveyor.setIntake(m_conveyor.up);
+    m_conveyor.setIntake(m_conveyor.down);
+    m_conveyor.setConveyorMotors(-0.7);
+    m_conveyor.setIntakeMotors(-0.7);
   }
-
-  
 
   // Called once after isFinished returns true
   @Override
