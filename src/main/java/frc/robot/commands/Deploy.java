@@ -12,20 +12,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.FrontIntake;
 
 public class Deploy extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Conveyor m_conveyor;
-  private final FrontIntake m_frontIntake;
 
   /**
    * Creates a new Test.
    */
-  public Deploy(final Conveyor conveyor, final FrontIntake frontIntake) {
+  public Deploy(final Conveyor conveyor) {
     m_conveyor = conveyor;
-    m_frontIntake = frontIntake;
-    addRequirements(frontIntake); // here to declare subsystem dependencies.
+    // here to declare subsystem dependencies.
     addRequirements(conveyor);
   }
 
@@ -38,9 +35,9 @@ public class Deploy extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_frontIntake.setArm(m_frontIntake.down);
-    m_conveyor.setMotors(1.0);
-    m_frontIntake.setMotors(1.0);
+    m_conveyor.setIntake(m_conveyor.down);
+    m_conveyor.setConveyorMotors(1.0);
+    m_conveyor.setIntakeMotors(1.0);
   }
 
   // Called once after isFinished returns true
