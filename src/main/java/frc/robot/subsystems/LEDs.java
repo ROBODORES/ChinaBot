@@ -126,11 +126,4 @@ public class LEDs extends Subsystem {
   public void setLEDS(double mode) {
     blinkin.set(mode);
   }
-
-
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  }
 }
