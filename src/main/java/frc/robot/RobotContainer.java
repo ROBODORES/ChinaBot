@@ -19,6 +19,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 
+/*
+   __ __   ___     ______    ______
+  / // /  |__ \   / ____/   / ____/
+ / // /_  __/ /  /___ \    /___ \  
+/__  __/ / __/  ____/ /   ____/ /  
+  /_/   /____/ /_____/   /_____/ 
+  _____   _                ____            _                   _                             
+ |_   _| | |__     ___    |  _ \    ___   | |__     ___     __| |   ___    _ __    ___   ___ 
+   | |   | '_ \   / _ \   | |_) |  / _ \  | '_ \   / _ \   / _` |  / _ \  | '__|  / _ \ / __|
+   | |   | | | | |  __/   |  _ <  | (_) | | |_) | | (_) | | (_| | | (_) | | |    |  __/ \__ \
+   |_|   |_| |_|  \___|   |_| \_\  \___/  |_.__/   \___/   \__,_|  \___/  |_|     \___| |___/
+                                                                                             
+*/
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -33,41 +47,23 @@ public class RobotContainer {
   private final Conveyor m_conveyor = new Conveyor();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  //private final Test m_test = new Test(m_conveyor, m_frontIntake);
-  //public static Deploy deploy = new Deploy();
 
-  /*public static Joystick controller;
-  public static JoystickButton aButton;
-  public static JoystickButton bButton;
-  public static JoystickButton xButton;
-  public static JoystickButton yButton;
-  public static JoystickButton leftBumperButton;
-  public static JoystickButton rightBumperButton;
-  public static JoystickButton leftMiniButton;
-  public static JoystickButton rightMiniButton;
-  public static JoystickButton leftStickButton;
-  public static JoystickButton rightStickButton;*/
+  public static XboxController m_driverController = new XboxController(0);
+  public static XboxController m_mechController = new XboxController(1);
 
-  public static XboxController m_xController;
+  //First Controller Setup
+  private static JoystickButton intakeButton = new JoystickButton(m_mechController, Button.kBumperRight.value);
+  private static JoystickButton outtakeButton = new JoystickButton(m_mechController, Button.kBumperLeft.value);
+  private static JoystickButton deployButton = new JoystickButton(m_mechController, Button.kX.value);
+  private static JoystickButton climberUpButton = new JoystickButton(m_mechController, Button.kY.value);
+  private static JoystickButton climberDownButton = new JoystickButton(m_mechController, Button.kA.value);
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
-    /*controller = new Joystick(0);
-    aButton = new JoystickButton(controller, 1);
-    bButton = new JoystickButton(controller, 2);
-    xButton = new JoystickButton(controller, 3);
-    yButton = new JoystickButton(controller, 4);
-    leftBumperButton = new JoystickButton(controller, 5);
-    rightBumperButton = new JoystickButton(controller, 6);
-    leftMiniButton = new JoystickButton(controller, 7);
-    rightMiniButton = new JoystickButton(controller, 8);
-    leftStickButton = new JoystickButton(controller, 9);
-    rightStickButton = new JoystickButton(controller, 10);
-    xController = new XboxController(0);*/
-
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(new Drive(m_drivetrain));
@@ -80,8 +76,12 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_xController, Button.kBumperRight.value).whenPressed(new Intake(m_conveyor)); //Intake
-    new JoystickButton(m_xController, Button.kX.value).whenPressed(new Deploy(m_conveyor));
+    intakeButton.whenPressed(new Intake(m_conveyor)); //Intake
+    intakeButton.whenReleased(new Stop(m_conveyor));
+    outtakeButton.whenPressed(new Outtake(m_conveyor)); //Outtake
+    outtakeButton.whenReleased(new Stop(m_conveyor));
+    deployButton.whenPressed(new Deploy(m_conveyor)); //Deploy
+    deployButton.whenReleased(new Stop(m_conveyor));
   }
 
 
