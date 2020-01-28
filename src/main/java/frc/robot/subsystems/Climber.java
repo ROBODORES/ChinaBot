@@ -10,10 +10,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * Add your docs here.
@@ -23,21 +27,45 @@ public class Climber extends SubsystemBase {
   // here. Call these from Commands.
   DoubleSolenoid climbSol; 
   WPI_VictorSPX leftClimbMotor; 
-  WPI_VictorSPX rightClimbMotor; 
+  WPI_VictorSPX rightClimbMotor;
+  SpeedControllerGroup climbMotors;
+  DutyCycleEncoder rightClimbDCEncoder;
+  DutyCycleEncoder leftClimbDCEncoder;
+  Encoder rightClimbSEncoder;
+  Encoder leftClimbSEncoder;
 
   public Climber(){
     climbSol = new DoubleSolenoid(Constants.forwardChannel, Constants.reverseChannel);
+    leftClimbMotor = new WPI_VictorSPX(Constants.leftClimbMotor);
+    rightClimbMotor = new WPI_VictorSPX(Constants.rightClimbMotor);
+    leftClimbMotor.setInverted(true);
+    climbMotors = new SpeedControllerGroup(leftClimbMotor, rightClimbMotor);
+    leftClimbDCEncoder = new DutyCycleEncoder(Constants.leftClimbDutyCycleEncoder);
+    rightClimbDCEncoder = new DutyCycleEncoder(Constants.rightClimbDutyCycleEncoder);
+    leftClimbSEncoder = new Encoder(Constants.leftClimbSEncoderA, Constants.leftClimbSEncoderB);
+    rightClimbSEncoder = new Encoder(Constants.rightClimbSEncoderA, Constants.rightClimbSEncoderB);
   }
 
-  public void lift(){
+  public void extend(){
     climbSol.set(Value.kForward);
   }
 
-  public void jumpOff(){
+  public void retract(){
     climbSol.set(Value.kReverse);
   }
 
-  public void setNeutral(){
+  public void neutralize(){
     climbSol.set(Value.kOff);
+  }
+
+  public void setClimbMotors(double speed){
+    climbMotors.set(speed);
+  }
+
+  public double getSEncoderRaw(){
+    double r = rightClimbSEncoder.getRaw();
+    double l = -leftClimbSEncoder.getRaw();
+    double raw = (r + l)/2;
+    return raw;
   }
 }
