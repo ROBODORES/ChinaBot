@@ -29,8 +29,10 @@ public class Climber extends SubsystemBase {
   WPI_VictorSPX leftClimbMotor; 
   WPI_VictorSPX rightClimbMotor;
   SpeedControllerGroup climbMotors;
-  DutyCycleEncoder rightClimbEncoder;
-  DutyCycleEncoder leftClimbEncoder;
+  DutyCycleEncoder rightClimbDCEncoder;
+  DutyCycleEncoder leftClimbDCEncoder;
+  Encoder rightClimbSEncoder;
+  Encoder leftClimbSEncoder;
 
   public Climber(){
     climbSol = new DoubleSolenoid(Constants.forwardChannel, Constants.reverseChannel);
@@ -38,7 +40,10 @@ public class Climber extends SubsystemBase {
     rightClimbMotor = new WPI_VictorSPX(Constants.rightClimbMotor);
     leftClimbMotor.setInverted(true);
     climbMotors = new SpeedControllerGroup(leftClimbMotor, rightClimbMotor);
-    rightClimbEncoder = new DutyCycleEncoder(Constants.rightClimbEncoder);
+    leftClimbDCEncoder = new DutyCycleEncoder(Constants.leftClimbDutyCycleEncoder);
+    rightClimbDCEncoder = new DutyCycleEncoder(Constants.rightClimbDutyCycleEncoder);
+    leftClimbSEncoder = new Encoder(Constants.leftClimbSEncoderA, Constants.leftClimbSEncoderB);
+    rightClimbSEncoder = new Encoder(Constants.rightClimbSEncoderA, Constants.rightClimbSEncoderB);
   }
 
   public void extend(){
@@ -55,5 +60,12 @@ public class Climber extends SubsystemBase {
 
   public void setClimbMotors(double speed){
     climbMotors.set(speed);
+  }
+
+  public double getSEncoderRaw(){
+    double r = rightClimbSEncoder.getRaw();
+    double l = -leftClimbSEncoder.getRaw();
+    double raw = (r + l)/2;
+    return raw;
   }
 }

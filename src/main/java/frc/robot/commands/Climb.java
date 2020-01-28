@@ -7,18 +7,16 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
-public class Extend extends CommandBase {
+public class Climb extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Climber m_climber;
-
   /**
-   * Creates a new Extend.
+   * Creates a new Climb.
    */
-  public Extend(final Climber climber) {
+  public Climb(final Climber climber) {
     m_climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);
@@ -32,11 +30,11 @@ public class Extend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double target = 3.0;
+    double target = 0.3;
+    m_climber.neutralize();
     m_climber.setClimbMotors(0.7);
     if(m_climber.getSEncoderRaw() >= target){
       m_climber.setClimbMotors(0.0);
-      m_climber.extend();
     }
   }
 

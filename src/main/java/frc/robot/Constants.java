@@ -28,7 +28,12 @@ public final class Constants {
     public static int reverseChannel = 1;
     public static int leftClimbMotor = 0;
     public static int rightClimbMotor = 1;
-    public static int rightClimbEncoder = 0;
+    public static int leftClimbDutyCycleEncoder = 0;
+    public static int rightClimbDutyCycleEncoder = 1;
+    public static int leftClimbSEncoderA = 0;
+    public static int leftClimbSEncoderB = 1;
+    public static int rightClimbSEncoderA = 2;
+    public static int rightClimbSEncoderB = 3;
 
     //Conveyor
     public static int bottomMotor = 0;
