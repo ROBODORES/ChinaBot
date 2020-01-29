@@ -35,6 +35,7 @@ public class Retract extends CommandBase {
     m_climber.setClimbMotors(-0.7);
     if(m_climber.getSEncoderRaw() <= 5 + home){
       m_climber.retract();
+      m_climber.setClimbMotors(0.0);
     }
   }
 
