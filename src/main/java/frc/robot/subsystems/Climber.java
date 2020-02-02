@@ -68,4 +68,9 @@ public class Climber extends SubsystemBase {
     double raw = (r + l)/2;
     return raw;
   }
+  
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

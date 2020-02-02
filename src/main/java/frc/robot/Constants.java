@@ -45,4 +45,8 @@ public final class Constants {
 
     //LEDs
     public static int blinkinPort = 0;
+
+    //Spinner
+    public static int spinSolPort = 1;
+    public static int spinMotor = 4;
 }

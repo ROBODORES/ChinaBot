@@ -126,4 +126,9 @@ public class LEDs extends SubsystemBase {
   public void setLEDS(double mode) {
     blinkin.set(mode);
   }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

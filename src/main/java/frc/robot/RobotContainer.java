@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.*;
@@ -43,7 +44,7 @@ public class RobotContainer {
   private final Conveyor m_conveyor = new Conveyor();
   private final Climber m_climber = new Climber();
   private final LEDs m_LEDs = new LEDs();
-
+  private final Spinner m_spinner = new Spinner();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   public static XboxController m_driverController = new XboxController(0);
@@ -55,6 +56,7 @@ public class RobotContainer {
   private static JoystickButton deployButton = new JoystickButton(m_mechController, Button.kX.value);
   private static JoystickButton climberUpButton = new JoystickButton(m_mechController, Button.kY.value);
   private static JoystickButton climberDownButton = new JoystickButton(m_mechController, Button.kA.value);
+  private static JoystickButton spinnerButton = new JoystickButton(m_mechController, Button.kStart.value);
 
 
   /**
@@ -80,8 +82,9 @@ public class RobotContainer {
     outtakeButton.whenReleased(new Stop(m_conveyor));
     deployButton.whenPressed(new Deploy(m_conveyor)); //Deploy
     deployButton.whenReleased(new Stop(m_conveyor));
-    climberUpButton.whenPressed(new Extend(m_climber));
+    climberUpButton.whenPressed(new Extend(m_climber)); //Climber
     climberDownButton.whenPressed(new Retract(m_climber));
+    spinnerButton.whileHeld(new Spin(m_spinner)); //Spinner
   }
 
 
