@@ -33,7 +33,7 @@ public class Drive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(RobotContainer.m_driverController.getRawAxis(0), RobotContainer.m_driverController.getRawAxis(4));
+    m_drivetrain.arcadeDrive(-0.75 * RobotContainer.m_driverController.getRawAxis(1), 0.75 * RobotContainer.m_driverController.getRawAxis(4));
   }
   
   // Called once after isFinished returns true

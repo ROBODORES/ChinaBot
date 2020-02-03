@@ -8,11 +8,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 /**
  * Add your docs here.
@@ -20,17 +19,17 @@ import frc.robot.Constants;
 public class Drivetrain extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  WPI_TalonSRX leftMotor;
-  WPI_TalonSRX rightMotor;
-  WPI_TalonSRX leftSlaveMotor;
-  WPI_TalonSRX rightSlaveMotor;
+  WPI_TalonFX leftMotor;
+  WPI_TalonFX rightMotor;
+  WPI_TalonFX leftSlaveMotor;
+  WPI_TalonFX rightSlaveMotor;
   DifferentialDrive differentialDrive;
 
   public Drivetrain(){
-    leftMotor = new WPI_TalonSRX(Constants.leftMotor);
-    rightMotor = new WPI_TalonSRX(Constants.rightMotor);
-    leftSlaveMotor = new WPI_TalonSRX(Constants.leftSlaveMotor);
-    rightSlaveMotor = new WPI_TalonSRX(Constants.rightSlaveMotor);
+    leftMotor = new WPI_TalonFX(Constants.leftMotor);
+    rightMotor = new WPI_TalonFX(Constants.rightMotor);
+    leftSlaveMotor = new WPI_TalonFX(Constants.leftSlaveMotor);
+    rightSlaveMotor = new WPI_TalonFX(Constants.rightSlaveMotor);
     differentialDrive = new DifferentialDrive(leftMotor, rightMotor);
 
     leftSlaveMotor.follow(leftMotor);
@@ -39,5 +38,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void arcadeDrive(double throttleSpeed, double turnSpeed){
     differentialDrive.arcadeDrive(throttleSpeed, turnSpeed);
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
   }
 }

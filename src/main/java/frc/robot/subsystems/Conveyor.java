@@ -38,13 +38,13 @@ public class Conveyor extends SubsystemBase {
   public Conveyor(){
     topConveyorMotor = new WPI_VictorSPX(Constants.topMotor);
     bottomConveyorMotor = new WPI_VictorSPX(Constants.bottomMotor);
-    bottomConveyorMotor.setInverted(true);
+    bottomConveyorMotor.setInverted(false);
     stopper = new Solenoid(Constants.stopper);
     conveyorMotors = new SpeedControllerGroup(topConveyorMotor, bottomConveyorMotor);
 
     intakeSol = new Solenoid(Constants.intakeSol);
     leftIntakeMotor = new WPI_VictorSPX(Constants.leftIntakeMotor);
-    leftIntakeMotor.setInverted(true);
+    leftIntakeMotor.setInverted(false);
     rightIntakeMotor = new WPI_VictorSPX(Constants.rightIntakeMotor);
     intakeMotors = new SpeedControllerGroup(leftIntakeMotor, rightIntakeMotor);
   }
@@ -62,6 +62,12 @@ public class Conveyor extends SubsystemBase {
   }
 
   public void setIntakeMotors(double speed){
-    intakeMotors.set(speed);
+    leftIntakeMotor.set(speed);
+    rightIntakeMotor.set(speed);
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
   }
 }

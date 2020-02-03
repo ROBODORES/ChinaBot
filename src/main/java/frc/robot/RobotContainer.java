@@ -41,8 +41,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final Conveyor m_conveyor = new Conveyor();
-  private final Climber m_climber = new Climber();
-  private final LEDs m_LEDs = new LEDs();
+  //private final Climber m_climber = new Climber();
+  //private final LEDs m_LEDs = new LEDs();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -80,8 +80,8 @@ public class RobotContainer {
     outtakeButton.whenReleased(new Stop(m_conveyor));
     deployButton.whenPressed(new Deploy(m_conveyor)); //Deploy
     deployButton.whenReleased(new Stop(m_conveyor));
-    climberUpButton.whenPressed(new Extend(m_climber));
-    climberDownButton.whenPressed(new Retract(m_climber));
+    //climberUpButton.whenPressed(new Extend(m_climber));
+    //climberDownButton.whenPressed(new Retract(m_climber));
   }
 
 

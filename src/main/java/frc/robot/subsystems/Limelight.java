@@ -8,12 +8,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
  * Add your docs here.
  */
-public class Limelight extends Subsystem {
+public class Limelight extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public double tv;
@@ -76,10 +77,8 @@ public class Limelight extends Subsystem {
     tvert = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tvert").getDouble(0);
   }
   
-
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  public void periodic() {
+    // This method will be called once per scheduler run
   }
 }

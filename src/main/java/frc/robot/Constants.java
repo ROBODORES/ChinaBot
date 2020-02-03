@@ -36,12 +36,12 @@ public final class Constants {
     public static int rightClimbSEncoderB = 3;
 
     //Conveyor
-    public static int bottomMotor = 0;
+    public static int bottomMotor = 2;
     public static int topMotor = 1;
-    public static int stopper = 0;
-    public static int intakeSol = 0;
-    public static int leftIntakeMotor = 0;
-    public static int rightIntakeMotor = 1;
+    public static int stopper = 2;
+    public static int intakeSol = 3;
+    public static int leftIntakeMotor = 3;
+    public static int rightIntakeMotor = 0;
 
     //LEDs
     public static int blinkinPort = 0;
