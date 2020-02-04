@@ -35,8 +35,8 @@ public class Intake extends CommandBase {
   @Override
   public void execute() {
     m_conveyor.setIntake(m_conveyor.down);
-    m_conveyor.setConveyorMotors(-0.7);
-    m_conveyor.setIntakeMotors(-0.05);
+    m_conveyor.setConveyorMotors(-1.0);
+    m_conveyor.setIntakeMotors(0.2);
   }
 
   // Called once after isFinished returns true

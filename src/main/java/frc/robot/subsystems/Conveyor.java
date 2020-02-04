@@ -7,7 +7,8 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,36 +22,37 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 public class Conveyor extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  WPI_VictorSPX topConveyorMotor;
-  WPI_VictorSPX bottomConveyorMotor;
+  VictorSPX topConveyorMotor;
+  VictorSPX bottomConveyorMotor;
   Solenoid stopper;
   public static boolean close = false;
   public static boolean open = true;
   SpeedControllerGroup conveyorMotors;
 
   Solenoid intakeSol;
-  WPI_VictorSPX leftIntakeMotor;
-  WPI_VictorSPX rightIntakeMotor;
+  VictorSPX leftIntakeMotor;
+  VictorSPX rightIntakeMotor;
   public static boolean up = false;
   public static boolean down = true;
   SpeedControllerGroup intakeMotors;
   
   public Conveyor(){
-    topConveyorMotor = new WPI_VictorSPX(Constants.topMotor);
-    bottomConveyorMotor = new WPI_VictorSPX(Constants.bottomMotor);
+    topConveyorMotor = new VictorSPX(Constants.topMotor);
+    bottomConveyorMotor = new VictorSPX(Constants.bottomMotor);
     bottomConveyorMotor.setInverted(false);
     stopper = new Solenoid(Constants.stopper);
-    conveyorMotors = new SpeedControllerGroup(topConveyorMotor, bottomConveyorMotor);
 
     intakeSol = new Solenoid(Constants.intakeSol);
-    leftIntakeMotor = new WPI_VictorSPX(Constants.leftIntakeMotor);
+    leftIntakeMotor = new VictorSPX(Constants.leftIntakeMotor);
     leftIntakeMotor.setInverted(false);
-    rightIntakeMotor = new WPI_VictorSPX(Constants.rightIntakeMotor);
-    intakeMotors = new SpeedControllerGroup(leftIntakeMotor, rightIntakeMotor);
+    rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
+
+    bottomConveyorMotor.follow(topConveyorMotor);
+    leftIntakeMotor.follow(rightIntakeMotor);
   }
 
   public void setConveyorMotors(double speed){
-    conveyorMotors.set(speed);
+    topConveyorMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setStopper(boolean state){
@@ -62,8 +64,7 @@ public class Conveyor extends SubsystemBase {
   }
 
   public void setIntakeMotors(double speed){
-    leftIntakeMotor.set(speed);
-    rightIntakeMotor.set(speed);
+    rightIntakeMotor.set(ControlMode.PercentOutput, speed);
   }
 
   @Override
