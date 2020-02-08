@@ -36,6 +36,7 @@ public class Drive extends CommandBase {
     m_drivetrain.arcadeDrive(-0.75 * RobotContainer.m_driverController.getRawAxis(1), 0.75 * RobotContainer.m_driverController.getRawAxis(4));
     System.out.print("Test1: " + m_drivetrain.navX.getYaw());
     System.out.println(" Test2: " + m_drivetrain.navX.getAngle());
+    //hi
   }
   
   // Called once after isFinished returns true
