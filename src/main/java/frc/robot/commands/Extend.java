@@ -32,12 +32,13 @@ public class Extend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double target = 3.0;
+    /*double target = 3.0;
     m_climber.setClimbMotors(0.7);
     if(m_climber.getSEncoderRaw() >= target){
       m_climber.setClimbMotors(0.0);
       m_climber.extend();
-    }
+    }*/
+    m_climber.extend();
   }
 
   // Called once the command ends or is interrupted.

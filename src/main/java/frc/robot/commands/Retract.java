@@ -30,14 +30,19 @@ public class Retract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double home = 0.0;
+   /* double home = 0.0;
     m_climber.neutralize();
     m_climber.setClimbMotors(-0.7);
     if(m_climber.getSEncoderRaw() <= 5 + home){
       m_climber.retract();
       m_climber.setClimbMotors(0.0);
     }
+*/
+      m_climber.retract(); 
   }
+
+
+
 
   // Called once the command ends or is interrupted.
   @Override

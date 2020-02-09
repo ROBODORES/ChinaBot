@@ -36,10 +36,10 @@ public class Climber extends SubsystemBase {
 
   public Climber(){
     climbSol = new DoubleSolenoid(Constants.forwardChannel, Constants.reverseChannel);
-    leftClimbMotor = new WPI_VictorSPX(Constants.leftClimbMotor);
-    rightClimbMotor = new WPI_VictorSPX(Constants.rightClimbMotor);
-    leftClimbMotor.setInverted(true);
-    climbMotors = new SpeedControllerGroup(leftClimbMotor, rightClimbMotor);
+    //leftClimbMotor = new WPI_VictorSPX(Constants.leftClimbMotor);
+   // rightClimbMotor = new WPI_VictorSPX(Constants.rightClimbMotor);
+    //leftClimbMotor.setInverted(true);
+    //climbMotors = new SpeedControllerGroup(leftClimbMotor, rightClimbMotor);
     leftClimbDCEncoder = new DutyCycleEncoder(Constants.leftClimbDutyCycleEncoder);
     rightClimbDCEncoder = new DutyCycleEncoder(Constants.rightClimbDutyCycleEncoder);
     leftClimbSEncoder = new Encoder(Constants.leftClimbSEncoderA, Constants.leftClimbSEncoderB);
@@ -58,10 +58,10 @@ public class Climber extends SubsystemBase {
     climbSol.set(Value.kOff);
   }
 
-  public void setClimbMotors(double speed){
+  /*public void setClimbMotors(double speed){
     climbMotors.set(speed);
   }
-
+*/
   public double getSEncoderRaw(){
     double r = rightClimbSEncoder.getRaw();
     double l = -leftClimbSEncoder.getRaw();
