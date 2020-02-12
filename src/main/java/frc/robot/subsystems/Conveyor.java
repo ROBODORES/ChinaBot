@@ -50,12 +50,33 @@ public class Conveyor extends SubsystemBase {
     leftIntakeMotor.setInverted(false);
     rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
 
-    bottomConveyorMotor.follow(topConveyorMotor);
+    //bottomConveyorMotor.follow(topConveyorMotor);
     leftIntakeMotor.follow(rightIntakeMotor);
   }
 
-  public void setConveyorMotors(double speed){
-    topConveyorMotor.set(ControlMode.PercentOutput, speed);
+  public void setConveyorMotors(double speed1, double speed2){
+    topConveyorMotor.set(ControlMode.PercentOutput, speed1);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, speed2);
+  }
+
+  public void conveyorIntake(){
+    topConveyorMotor.set(ControlMode.PercentOutput, -0.75);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, 0.5);
+  }
+
+  public void conveyorExtake(){
+    topConveyorMotor.set(ControlMode.PercentOutput, 1.0);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, 1.0);
+  }
+
+  public void conveyorDeploy(){
+    topConveyorMotor.set(ControlMode.PercentOutput, -1.0);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, -1.0);
+  }
+
+  public void conveyorStop(){
+    topConveyorMotor.set(ControlMode.PercentOutput, 0.0);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   public void setStopper(boolean state){

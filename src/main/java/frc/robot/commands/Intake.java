@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 
 public class Intake extends CommandBase {
@@ -35,8 +36,11 @@ public class Intake extends CommandBase {
   @Override
   public void execute() {
     m_conveyor.setIntake(m_conveyor.down);
-    m_conveyor.setConveyorMotors(-1.0);
+    //m_conveyor.setConveyorMotors(-1.0);
+    //m_conveyor.conveyorIntake();
+    m_conveyor.setConveyorMotors(RobotContainer.m_mechController.getRawAxis(1), RobotContainer.m_mechController.getRawAxis(5));
     m_conveyor.setIntakeMotors(0.2);
+    System.out.println("Top Conveyor Speed: " + RobotContainer.m_mechController.getRawAxis(1) + ", Bottom Conveyor Speed: " + RobotContainer.m_mechController.getRawAxis(5));
   }
 
   // Called once after isFinished returns true

@@ -35,15 +35,16 @@ public class Deploy extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_conveyor.setIntake(m_conveyor.down);
-    m_conveyor.setConveyorMotors(1.0);
-    m_conveyor.setIntakeMotors(1.0);
+    m_conveyor.setIntake(m_conveyor.up);
+    //m_conveyor.setConveyorMotors(1.0);
+    m_conveyor.conveyorDeploy();
+    m_conveyor.setIntakeMotors(0.0);
   }
 
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -26,7 +26,7 @@ public final class Constants {
     //Climber
     public static int forwardChannel = 0;
     public static int reverseChannel = 1;
-    public static int leftClimbMotor = 0;
+    public static int leftClimbMotor = 4;
     public static int rightClimbMotor = 1;
     public static int leftClimbDutyCycleEncoder = 0;
     public static int rightClimbDutyCycleEncoder = 1;

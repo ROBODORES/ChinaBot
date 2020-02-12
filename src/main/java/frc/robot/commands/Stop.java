@@ -34,7 +34,7 @@ public class Stop extends CommandBase {
   @Override
   public void execute() {
     m_conveyor.setStopper(m_conveyor.close);
-    m_conveyor.setConveyorMotors(0.0);
+    m_conveyor.conveyorStop();
     m_conveyor.setIntakeMotors(0.0);
     m_conveyor.setIntake(m_conveyor.up);
   }

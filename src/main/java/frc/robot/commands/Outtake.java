@@ -34,9 +34,10 @@ public class Outtake extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_conveyor.setIntake(m_conveyor.down);
-    m_conveyor.setConveyorMotors(-0.7);
-    m_conveyor.setIntakeMotors(-0.7);
+    m_conveyor.setIntake(m_conveyor.up);
+    //m_conveyor.setConveyorMotors(-0.7);
+    m_conveyor.conveyorExtake();
+    m_conveyor.setIntakeMotors(-0.0);
   }
 
   // Called once after isFinished returns true

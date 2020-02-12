@@ -55,6 +55,7 @@ public class RobotContainer {
   private static JoystickButton deployButton = new JoystickButton(m_mechController, Button.kX.value);
   private static JoystickButton climberUpButton = new JoystickButton(m_mechController, Button.kY.value);
   private static JoystickButton climberDownButton = new JoystickButton(m_mechController, Button.kA.value);
+  private static JoystickButton liftButton = new JoystickButton(m_mechController, Button.kB.value);
 
 
   /**
@@ -65,6 +66,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(new Drive(m_drivetrain));
+    m_climber.setDefaultCommand(new Retract(m_climber));
   }
 
   /**
@@ -82,6 +84,7 @@ public class RobotContainer {
     deployButton.whenReleased(new Stop(m_conveyor));
     climberUpButton.whenPressed(new Extend(m_climber));
     climberDownButton.whenPressed(new Retract(m_climber));
+    liftButton.whileHeld(new Climb(m_climber));
   }
 
 
