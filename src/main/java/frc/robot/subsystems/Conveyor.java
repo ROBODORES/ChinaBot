@@ -60,8 +60,8 @@ public class Conveyor extends SubsystemBase {
   }
 
   public void conveyorIntake(){
-    topConveyorMotor.set(ControlMode.PercentOutput, -0.75);
-    bottomConveyorMotor.set(ControlMode.PercentOutput, 0.5);
+    topConveyorMotor.set(ControlMode.PercentOutput, -0.1);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, -0.2);
   }
 
   public void conveyorExtake(){
