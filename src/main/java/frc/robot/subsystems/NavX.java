@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class NavX extends SubsystemBase {
@@ -17,19 +18,20 @@ public class NavX extends SubsystemBase {
   AHRS Navx; 
   AHRS ahrs; 
 
+}
+
   /**
    * Creates a new NavX.
    */
-  public NavX(){
+ /* public NavX(){
     ahrs = new AHRS(SPI.Port.kMXP);
     ahrs.resetDisplacement();
     ahrs.reset();
-    angle = ahrs.getYaw(); // defining variable for gyro
-    // init for navX imu 
-
+   angle = ahrs.getYaw(); // defining variable for gyro
+    // init for navX imu */
+ 
 
   
-  } 
 
 
 
@@ -37,7 +39,7 @@ public class NavX extends SubsystemBase {
 
 
     
-    } 
+    
   
 
 
@@ -49,13 +51,13 @@ public class NavX extends SubsystemBase {
 
 
 
-  }
+  
 
   
-  }
+  
 
-  @Override
-  public void periodic() {
+  //@Override
+  //public void periodic() {
     // This method will be called once per scheduler run
-  }
-}
+  //}
+//}}

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -18,14 +20,21 @@ package frc.robot;
 public final class Constants {
 
     //Drivetrian
-    public static int leftMotor = 0;
+     public static int leftMotor = 0;
     public static int rightMotor = 2;
     public static int leftSlaveMotor = 1;
     public static int rightSlaveMotor = 3;
-
+    
     //Climber
     public static int forwardChannel = 0;
-    public static int reverseChannel = 1;
+
+
+    //encoder ports
+
+        public static final int[] LeftEncoderPorts = new int[]{0, 1};
+        public static final int[] RightEncoderPorts = new int[]{2, 3};
+        public static final boolean LeftEncoderReversed = true;
+        public static final boolean RightEncoderReversed = false;
     
     //Front Intake
     public static int intakeSol = 0;
@@ -38,5 +47,46 @@ public final class Constants {
     public static int stopper = 0;
 
     //LEDs
-    public static int blinkinPort = 0;
+    public static int blinkinPort = 0; 
+    
+
+    //encoder values  
+    public static int leftClimbDutyCycleEncoder = 0;
+    public static int rightClimbDutyCycleEncoder = 1;
+    public static int leftClimbSEncoderA = 0;
+    public static int leftClimbSEncoderB = 1;
+    public static int rightClimbSEncoderA = 2;
+    public static int rightClimbSEncoderB = 3;
+
+
 }
+
+    //Trajectories 
+    // public static final double kTrackwidthMeters =
+    //public static final DifferentialDriveKinematics kDriveKinematics =
+            //new DifferentialDriveKinematics(kTrackwidthMeters);
+            
+       
+
+       // public static final double WheelDiameterMeters = 0.;
+       // public static final double LeftEncoderPulsesPerRev = ; //
+        //public static final double RightEncoderPulsesPerRev = ; 
+        //public static final double LeftMetersPerPulse = Math.PI * kWheelDiameterMeters / kLeftEncoderPulsesPerRev;
+        //public static final double RightMetersPerPulse = Math.PI * kWheelDiameterMeters / kRightEncoderPulsesPerRev;
+
+       // public static final boolean kGyroReversed = true; // For NavX
+
+        /*public static final double ksVolts = 0.;
+        public static final double kvVoltSecondsPerMeter = ;
+        public static final double kaVoltSecondsSquaredPerMeter = ;
+        // Example value only - as above, this must be tuned for your drive!
+        public static final double kPDriveVel =; 
+    
+        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7; }
+    }
+}
+    */
+
+

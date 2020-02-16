@@ -22,7 +22,7 @@ public class Climber extends SubsystemBase {
   DoubleSolenoid climbSol;
 
   public Climber(){
-    climbSol = new DoubleSolenoid(Constants.forwardChannel, Constants.reverseChannel);
+   // climbSol = new DoubleSolenoid(Constants.forwardChannel, Constants.reverseChannel);
   }
 
   public void lift(){
