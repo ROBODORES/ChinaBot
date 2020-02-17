@@ -46,6 +46,7 @@ public class RobotContainer {
   private final UltrasonicSensor m_sensor = new UltrasonicSensor();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final RunAuto m_auto = new RunAuto(m_drivetrain, m_sensor, m_conveyor);
 
   public static XboxController m_driverController = new XboxController(0);
   public static XboxController m_mechController = new XboxController(1);
@@ -66,7 +67,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(new Drive(m_drivetrain));
+    m_drivetrain.setDefaultCommand(new Drive(m_drivetrain, m_sensor));
     m_climber.setDefaultCommand(new Retract(m_climber));
   }
 
@@ -95,8 +96,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    RunAuto m_auto = new RunAuto(m_drivetrain, m_sensor, m_conveyor);
     // An ExampleCommand will run in autonomous
-    return m_auto;
+    return m_autoCommand;
   }
 }

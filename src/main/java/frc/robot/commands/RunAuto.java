@@ -18,8 +18,8 @@ public class RunAuto extends CommandBase {
   private Drivetrain m_drivetrain;
   private UltrasonicSensor m_sensor;
   private Conveyor m_conveyor;
-  private double targetDistance = 0.5;
-  private double wiggleRoom = 0.1;
+  private double targetVolts = 0.5;
+  //private double wiggleRoom = 0.1;
   private Timer m_timer;
   /**
    * Creates a new RunAuto.
@@ -44,7 +44,7 @@ public class RunAuto extends CommandBase {
   public void execute() {
     m_drivetrain.arcadeDrive(0.2, 0.0);
     m_sensor.readSensorInput();
-    if(m_sensor.getDistance() >= (targetDistance - wiggleRoom)){
+    if(m_sensor.getVolts() < (targetVolts)){
       m_drivetrain.arcadeDrive(0.0, 0.0);
       m_timer.start();
       m_conveyor.conveyorDeploy();

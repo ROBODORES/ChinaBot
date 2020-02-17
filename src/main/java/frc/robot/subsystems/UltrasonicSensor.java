@@ -27,15 +27,15 @@ public class UltrasonicSensor extends SubsystemBase {
     return ultraSonicSensor.getVoltage();
   }
 
-  public double getDistance(){
+  /*public double getDistance(){
     double v = getVolts();
-    double dInMeters = (v - voltOffset) * bitsPerVolt * mmPerBit *mmToM;
+    double dInMeters = (v / bitsPerVolt);
     return dInMeters;
-  }
+  }*/
 
   public void readSensorInput(){
     System.out.print("Voltage: " + getVolts());
-    System.out.println(", Distance in Meters: " + getDistance());
+    //System.out.println(", Distance in Meters: " + getDistance());
   }
 
   @Override
