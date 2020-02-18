@@ -9,25 +9,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Sensors;
-import edu.wpi.first.wpilibj.Timer;
 
-public class RunAuto extends CommandBase {
+public class ResetConveyorEncoder extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private Drivetrain m_drivetrain;
-  private Conveyor m_conveyor;
-  private double targetVolts = 0.5;
-  //private double wiggleRoom = 0.1;
-  private Timer m_timer;
+  private final Conveyor m_conveyor;
   /**
-   * Creates a new RunAuto.
+   * Creates a new ResetConveyorEncoder.
    */
-  public RunAuto(Drivetrain drivetrain, Conveyor conveyor) {
-    m_drivetrain = drivetrain;
+  public ResetConveyorEncoder(Conveyor conveyor) {
     m_conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
     addRequirements(conveyor);
   }
 
@@ -39,13 +30,7 @@ public class RunAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(0.2, 0.0);
-    m_conveyor.getSensorInput();
-    if(m_conveyor.getSensorInput() != true){
-      m_drivetrain.arcadeDrive(0.0, 0.0);
-      m_timer.start();
-      m_conveyor.conveyorDeploy();
-    }
+    m_conveyor.resetEncoder();
   }
 
   // Called once the command ends or is interrupted.
@@ -56,10 +41,6 @@ public class RunAuto extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_timer.get() >= 5){
-      m_conveyor.setConveyorMotors(0.0, 0.0);
-      return true;
-    }
     return false;
   }
 }

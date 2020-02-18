@@ -29,7 +29,7 @@ public class Deploy extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
-    m_conveyor.setStopper(m_conveyor.open);
+    //m_conveyor.setStopper(m_conveyor.open);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -39,12 +39,12 @@ public class Deploy extends CommandBase {
     //m_conveyor.setConveyorMotors(1.0);
     m_conveyor.conveyorDeploy();
     m_conveyor.setIntakeMotors(0.0);
+    //System.out.println("Feedback: " + m_conveyor.getConveyorEncoderDistance());
   }
 
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()

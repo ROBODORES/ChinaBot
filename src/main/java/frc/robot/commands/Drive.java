@@ -7,23 +7,25 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.UltrasonicSensor;
+import frc.robot.subsystems.Sensors;
 
 public class Drive extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Drivetrain m_drivetrain;
-  private final UltrasonicSensor m_sensor;
+  private final Sensors m_sensor;
+  private final Timer m_timer = new Timer();
 
   /**
    * Creates a new Test.
    */
-  public Drive(final Drivetrain drivetrain, final UltrasonicSensor sensor) {
+  public Drive(final Drivetrain drivetrain, final Sensors sensor) {
     m_drivetrain = drivetrain;
     m_sensor = sensor;
     addRequirements(drivetrain);
@@ -39,7 +41,7 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     m_drivetrain.arcadeDrive(0.75 * RobotContainer.m_driverController.getRawAxis(1), 0.75 * RobotContainer.m_driverController.getRawAxis(4));
-    System.out.println("Voltage: " + m_sensor.getVolts());
+    //System.out.println("Feedback: " + m_sensor.getSensorInput());
     //System.out.println(", Distance: " + m_sensor.getDistance());
   }
   

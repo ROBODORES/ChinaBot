@@ -43,10 +43,10 @@ public class RobotContainer {
   private final Conveyor m_conveyor = new Conveyor();
   private final Climber m_climber = new Climber();
   //private final LEDs m_LEDs = new LEDs();
-  private final UltrasonicSensor m_sensor = new UltrasonicSensor();
+  private final Sensors m_sensor = new Sensors();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final RunAuto m_auto = new RunAuto(m_drivetrain, m_sensor, m_conveyor);
+  private final RunAuto m_auto = new RunAuto(m_drivetrain, m_conveyor);
 
   public static XboxController m_driverController = new XboxController(0);
   public static XboxController m_mechController = new XboxController(1);
@@ -58,6 +58,7 @@ public class RobotContainer {
   private static JoystickButton climberUpButton = new JoystickButton(m_mechController, Button.kY.value);
   private static JoystickButton climberDownButton = new JoystickButton(m_mechController, Button.kA.value);
   private static JoystickButton liftButton = new JoystickButton(m_mechController, Button.kB.value);
+  private static JoystickButton resetEncoderButton = new JoystickButton(m_mechController, Button.kStickLeft.value);
 
 
   /**
@@ -78,7 +79,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    intakeButton.whenPressed(new Intake(m_conveyor)); //Intake
+    intakeButton.whileHeld(new Intake(m_conveyor)); //Intake
     intakeButton.whenReleased(new Stop(m_conveyor));
     outtakeButton.whenPressed(new Outtake(m_conveyor)); //Outtake
     outtakeButton.whenReleased(new Stop(m_conveyor));
@@ -87,6 +88,7 @@ public class RobotContainer {
     climberUpButton.whenPressed(new Extend(m_climber));
     climberDownButton.whenPressed(new Retract(m_climber));
     liftButton.whileHeld(new Climb(m_climber));
+    //resetEncoderButton.whenPressed(new ResetConveyorEncoder(m_conveyor));
   }
 
 

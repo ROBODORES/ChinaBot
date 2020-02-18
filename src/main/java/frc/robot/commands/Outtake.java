@@ -28,7 +28,7 @@ public class Outtake extends CommandBase {
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
-    m_conveyor.setStopper(m_conveyor.close);
+    //m_conveyor.setStopper(m_conveyor.close);
   }
 
   // Called repeatedly when this Command is scheduled to run

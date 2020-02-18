@@ -28,12 +28,12 @@ public final class Constants {
     public static int reverseChannel = 1;
     public static int leftClimbMotor = 4;
     public static int rightClimbMotor = 1;
-    public static int leftClimbDutyCycleEncoder = 0;
+    /*public static int leftClimbDutyCycleEncoder = 0;
     public static int rightClimbDutyCycleEncoder = 1;
     public static int leftClimbSEncoderA = 0;
     public static int leftClimbSEncoderB = 1;
     public static int rightClimbSEncoderA = 2;
-    public static int rightClimbSEncoderB = 3;
+    public static int rightClimbSEncoderB = 3;*/
 
     //Conveyor
     public static int bottomMotor = 2;
@@ -42,6 +42,8 @@ public final class Constants {
     public static int intakeSol = 3;
     public static int leftIntakeMotor = 3;
     public static int rightIntakeMotor = 0;
+    public static int conveyorEncoderA = 1;
+    public static int conveyorEncoderB = 2;
 
     //LEDs
     public static int blinkinPort = 0;

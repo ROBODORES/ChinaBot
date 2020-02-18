@@ -13,9 +13,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.Timer;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -38,6 +41,11 @@ public class Conveyor extends SubsystemBase {
   public static boolean up = false;
   public static boolean down = true;
   SpeedControllerGroup intakeMotors;
+
+  Encoder conveyorEncoder;
+  DigitalInput infraredSensor;
+
+  Timer timer;
   
   public Conveyor(){
     topConveyorMotor = new VictorSPX(Constants.topMotor);
@@ -50,8 +58,15 @@ public class Conveyor extends SubsystemBase {
     leftIntakeMotor.setInverted(false);
     rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
 
+    conveyorEncoder = new Encoder(Constants.conveyorEncoderA, Constants.conveyorEncoderB);
+
+    timer = new Timer();
+    infraredSensor= new DigitalInput(0);
+
     //bottomConveyorMotor.follow(topConveyorMotor);
     leftIntakeMotor.follow(rightIntakeMotor);
+
+    timer.start();
   }
 
   public void setConveyorMotors(double speed1, double speed2){
@@ -59,9 +74,13 @@ public class Conveyor extends SubsystemBase {
     bottomConveyorMotor.set(ControlMode.PercentOutput, speed2);
   }
 
+  public void conveyorReverseIntake(){
+    topConveyorMotor.set(ControlMode.PercentOutput, 0.5);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, 0.5);
+  }
   public void conveyorIntake(){
-    topConveyorMotor.set(ControlMode.PercentOutput, -0.2);
-    bottomConveyorMotor.set(ControlMode.PercentOutput, 0.0);
+    topConveyorMotor.set(ControlMode.PercentOutput, -0.7);
+    bottomConveyorMotor.set(ControlMode.PercentOutput, -0.7);
   }
 
   public void conveyorExtake(){
@@ -89,6 +108,30 @@ public class Conveyor extends SubsystemBase {
 
   public void setIntakeMotors(double speed){
     rightIntakeMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public int getConveyorEncoderDistance(){
+    int distance = conveyorEncoder.getRaw();
+    return distance;
+  }
+
+  public void resetEncoder(){
+    conveyorEncoder.reset();
+  }
+
+  public boolean getSensorInput(){
+    boolean feedback = infraredSensor.get();
+    return feedback;
+  }
+
+  public boolean checker(){
+    if(getSensorInput() == true){
+      timer.reset();
+    }
+    if(timer.get() > 0.5){
+      return true;
+    }
+    return false;
   }
 
   @Override
