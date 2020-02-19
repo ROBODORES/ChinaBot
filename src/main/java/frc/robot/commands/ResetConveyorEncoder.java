@@ -8,15 +8,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.conveyorPID;
 
 public class ResetConveyorEncoder extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Conveyor m_conveyor;
+  private final conveyorPID m_conveyor;
   /**
    * Creates a new ResetConveyorEncoder.
    */
-  public ResetConveyorEncoder(Conveyor conveyor) {
+  public ResetConveyorEncoder(conveyorPID conveyor) {
     m_conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);

@@ -40,7 +40,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Conveyor m_conveyor = new Conveyor();
+  private final conveyorPID m_conveyor = new conveyorPID();
   private final Climber m_climber = new Climber();
   //private final LEDs m_LEDs = new LEDs();
   private final Sensors m_sensor = new Sensors();

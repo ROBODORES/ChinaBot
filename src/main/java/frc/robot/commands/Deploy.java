@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.conveyorPID;
 
 public class Deploy extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final Conveyor m_conveyor;
+  private final conveyorPID m_conveyor;
 
   /**
    * Creates a new Test.
    */
-  public Deploy(final Conveyor conveyor) {
+  public Deploy(final conveyorPID conveyor) {
     m_conveyor = conveyor;
     // here to declare subsystem dependencies.
     addRequirements(conveyor);

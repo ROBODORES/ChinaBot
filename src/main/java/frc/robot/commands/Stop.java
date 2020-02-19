@@ -10,16 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.conveyorPID;
 
 public class Stop extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final Conveyor m_conveyor;
+  private final conveyorPID m_conveyor;
 
   /**
    * Creates a new Test.
    */
-  public Stop(final Conveyor conveyor) {
+  public Stop(final conveyorPID conveyor) {
     m_conveyor = conveyor;
     // here to declare subsystem dependencies.
     addRequirements(conveyor);

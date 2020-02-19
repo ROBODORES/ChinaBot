@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,11 +7,11 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,12 +22,13 @@ import edu.wpi.first.wpilibj.Timer;
 
 import com.kauailabs.navx.frc.AHRS;
 
-/**
- * Add your docs here.
- */
-public class Conveyor extends SubsystemBase {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
+  /**
+   * Creates a new ConveyorPID.
+   */
+  //get distance and output goal 
+  
+public class conveyorPID extends PIDSubsystem {
   VictorSPX topConveyorMotor;
   VictorSPX bottomConveyorMotor;
   Solenoid stopper;
@@ -46,27 +47,56 @@ public class Conveyor extends SubsystemBase {
   DigitalInput infraredSensor;
 
   Timer timer;
-  
-  public Conveyor(){
-    topConveyorMotor = new VictorSPX(Constants.topMotor);
-    bottomConveyorMotor = new VictorSPX(Constants.bottomMotor);
-    bottomConveyorMotor.setInverted(false);
-    stopper = new Solenoid(Constants.stopper);
 
-    intakeSol = new Solenoid(Constants.intakeSol);
-    leftIntakeMotor = new VictorSPX(Constants.leftIntakeMotor);
-    leftIntakeMotor.setInverted(false);
-    rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
+  /**
+   * Creates a new conveyorPID.
+   */
+  public int mode = 0; 
+  public conveyorPID() {
+    super(
+        // The PIDController used by the subsystem
+        new PIDController(0, 0, 0));
+        topConveyorMotor = new VictorSPX(Constants.topMotor);
+        bottomConveyorMotor = new VictorSPX(Constants.bottomMotor);
+        bottomConveyorMotor.setInverted(false);
+        stopper = new Solenoid(Constants.stopper);
+    
+        intakeSol = new Solenoid(Constants.intakeSol);
+        leftIntakeMotor = new VictorSPX(Constants.leftIntakeMotor);
+        leftIntakeMotor.setInverted(false);
+        rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
+    
+        conveyorEncoder = new Encoder(Constants.conveyorEncoderA, Constants.conveyorEncoderB);
+    
+        timer = new Timer();
+        infraredSensor= new DigitalInput(0);
+    
+        //bottomConveyorMotor.follow(topConveyorMotor);
+        leftIntakeMotor.follow(rightIntakeMotor);
+    
+        timer.start();
+        
+  }
 
-    conveyorEncoder = new Encoder(Constants.conveyorEncoderA, Constants.conveyorEncoderB);
+  @Override
+  public void useOutput(double output, double setpoint) {
+ double limiter = 0.0; 
+ if(output > limiter){
+   output = limiter;
+ }
+ else if (output< -limiter){
+   output = limiter; 
+ }
+setConveyorMotors(output, output); 
+    // Use the output here
+  }
 
-    timer = new Timer();
-    infraredSensor= new DigitalInput(0);
+  @Override
+  public double getMeasurement() {
+    // Return the process variable measurement here
 
-    //bottomConveyorMotor.follow(topConveyorMotor);
-    leftIntakeMotor.follow(rightIntakeMotor);
 
-    timer.start();
+    return conveyorEncoder.getRaw()/1000;
   }
 
   public void setConveyorMotors(double speed1, double speed2){
@@ -128,12 +158,19 @@ public class Conveyor extends SubsystemBase {
     if(getSensorInput() == true){
       timer.reset();
     }
+
     if(timer.get() > 0.5){
       return true;
     }
     return false;
   }
-
+  public void setmode(int newMode){
+mode = newMode; 
+  }
+  public int getMode(){
+    return mode; 
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

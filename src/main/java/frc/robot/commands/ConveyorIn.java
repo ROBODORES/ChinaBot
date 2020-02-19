@@ -9,57 +9,51 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyorPID;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Sensors;
-import edu.wpi.first.wpilibj.Timer;
 
-public class RunAuto extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private Drivetrain m_drivetrain;
-  private conveyorPID m_conveyor;
-  private double targetVolts = 0.5;
-  //private double wiggleRoom = 0.1;
-  private Timer m_timer;
+public class ConveyorIn extends CommandBase {
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  private final conveyorPID m_conveyor;
+  private boolean ender = false;
   /**
-   * Creates a new RunAuto.
+   * Creates a new ConveyorIn.
    */
-  public RunAuto(Drivetrain drivetrain, conveyorPID conveyor) {
-    m_drivetrain = drivetrain;
+  public ConveyorIn(conveyorPID conveyor) {
     m_conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
     addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_conveyor.enable();
+    m_conveyor.setIntake(m_conveyor.down);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(0.2, 0.0);
-    m_conveyor.getSensorInput();
-    if(m_conveyor.getSensorInput() != true){
-      m_drivetrain.arcadeDrive(0.0, 0.0);
-      m_timer.start();
-      m_conveyor.conveyorDeploy();
+    if(m_conveyor.getMeasurement() <= -8.99 || m_conveyor.mode != 2){
+      ender = true; 
+    } else{
+      m_conveyor.setIntakeMotors(0.0);
+      m_conveyor.setSetpoint(-9);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+public void end(boolean interrupted) {
+  if(m_conveyor.mode == 2){
+    m_conveyor.mode = 0; 
+    m_conveyor.resetEncoder();
+    m_conveyor.setSetpoint(0.0);
   }
+}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_timer.get() >= 5){
-      m_conveyor.setConveyorMotors(0.0, 0.0);
-      return true;
-    }
-    return false;
+    return ender;
   }
 }
