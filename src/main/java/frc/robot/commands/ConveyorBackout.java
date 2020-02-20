@@ -30,16 +30,23 @@ private boolean ender = false;
   public void initialize() {
      m_conveyor.enable() ; 
      m_conveyor.setIntake(m_conveyor.down);
+     System.out.println("Starting step 1!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_conveyor.getMeasurement() >= 0.49 || m_conveyor.mode != 1){
+    if(m_conveyor.getMeasurement() >= 0.4 || m_conveyor.mode != 1){
       ender = true; 
+      if(m_conveyor.mode != 1){
+        System.out.println("Step 1 will finish because my mode is not 1! My mode is: " + m_conveyor.mode);
+      } else if(m_conveyor.getMeasurement() >= 0.4){
+        System.out.println("Step 1 will finish because I have reached my target!");
+      }
     } else{
       m_conveyor.setIntakeMotors(0.0);
       m_conveyor.setSetpoint(0.5);
+      System.out.println("I should have moved the conveyor out! I am still not close enough to my target! My error is: " + (0.5 - m_conveyor.getMeasurement()));
     }
     
   }
@@ -51,7 +58,9 @@ private boolean ender = false;
       m_conveyor.mode = 2; 
       m_conveyor.resetEncoder();
       m_conveyor.setSetpoint(0.0);
+      System.out.println("Step 1 Finished! My mode is now: " + m_conveyor.mode);
     }
+    System.out.println("Step 1 Finished!");
   }
 
   // Returns true when the command should end.

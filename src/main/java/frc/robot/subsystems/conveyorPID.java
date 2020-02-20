@@ -48,14 +48,22 @@ public class conveyorPID extends PIDSubsystem {
 
   Timer timer;
 
+  static double kP = 0.35;
+  static double kI = 0.0;
+  static double kD = 0.0;
+
   /**
    * Creates a new conveyorPID.
    */
-  public int mode = 0; 
+  public int mode = 0;
+
   public conveyorPID() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0, 0, 0));
+        new PIDController(kP, kI, kD));
+
+        getController().setTolerance(0.1);
+        setSetpoint(0.0);
         topConveyorMotor = new VictorSPX(Constants.topMotor);
         bottomConveyorMotor = new VictorSPX(Constants.bottomMotor);
         bottomConveyorMotor.setInverted(false);
@@ -80,23 +88,32 @@ public class conveyorPID extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
- double limiter = 0.0; 
- if(output > limiter){
-   output = limiter;
- }
- else if (output< -limiter){
-   output = limiter; 
- }
-setConveyorMotors(output, output); 
+    double limiter = 1.0; 
+    if(output > limiter){
+      output = limiter;
+    }
+    else if (output < -limiter){
+      output = -limiter; 
+    }
+    setConveyorMotors(output, output); 
+    //System.out.println(output);
     // Use the output here
   }
 
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
+    return (double)conveyorEncoder.getRaw()/1000.0;
+  }
 
-
-    return conveyorEncoder.getRaw()/1000;
+  public boolean atSetpoint(double tolerance, double setpoint){
+    if(getMeasurement() <= (setpoint - tolerance)){
+      return true;
+    }
+    if (getMeasurement() >= (setpoint + tolerance)) {
+      return true;
+    }
+    return false;
   }
 
   public void setConveyorMotors(double speed1, double speed2){
@@ -169,10 +186,5 @@ mode = newMode;
   }
   public int getMode(){
     return mode; 
-  }
-  
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

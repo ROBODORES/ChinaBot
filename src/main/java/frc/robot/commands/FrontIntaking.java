@@ -37,13 +37,16 @@ public class FrontIntaking extends CommandBase {
     m_conveyor.setIntake(m_conveyor.down);
     //m_conveyor.setStopper(m_conveyor.close);
     intaking = false;
+    System.out.println("At the start!");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
     if(m_conveyor.checker() == true || m_conveyor.mode != 0){
-      System.out.println("I should be running the conveyor!");
+      if(m_conveyor.mode != 0){
+        System.out.println("Step 1 has finished because my mode isnt 0. My mode is: " + m_conveyor.mode);
+      }
       intaking = true;
     } else{
       m_conveyor.setIntakeMotors(0.3);
@@ -57,6 +60,9 @@ public class FrontIntaking extends CommandBase {
       m_conveyor.mode = 1; 
       m_conveyor.resetEncoder();
       m_conveyor.setSetpoint(0.0);
+      System.out.println("My mode is now: " + m_conveyor.mode + ". Finishing Step 0");
+    }else{
+      System.out.println("Finishing step 0");
     }
   }
 

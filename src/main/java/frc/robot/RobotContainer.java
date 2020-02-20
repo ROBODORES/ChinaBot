@@ -58,7 +58,8 @@ public class RobotContainer {
   private static JoystickButton climberUpButton = new JoystickButton(m_mechController, Button.kY.value);
   private static JoystickButton climberDownButton = new JoystickButton(m_mechController, Button.kA.value);
   private static JoystickButton liftButton = new JoystickButton(m_mechController, Button.kB.value);
-  private static JoystickButton resetEncoderButton = new JoystickButton(m_mechController, Button.kStickLeft.value);
+  //private static JoystickButton resetEncoderButton = new JoystickButton(m_mechController, Button.kStickLeft.value);
+  private static JoystickButton PIDTestButton = new JoystickButton(m_mechController, Button.kStickLeft.value);
 
 
   /**
@@ -89,6 +90,7 @@ public class RobotContainer {
     climberDownButton.whenPressed(new Retract(m_climber));
     liftButton.whileHeld(new Climb(m_climber));
     //resetEncoderButton.whenPressed(new ResetConveyorEncoder(m_conveyor));
+    PIDTestButton.whenPressed(new ConveyorPIDTest(m_conveyor));
   }
 
 

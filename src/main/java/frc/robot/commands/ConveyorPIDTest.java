@@ -10,14 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyorPID;
 
-public class ConveyorIn extends CommandBase {
+public class ConveyorPIDTest extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final conveyorPID m_conveyor;
-  private boolean ender = false;
+  double setpoint = -10.0;
+  double tolerance = 0.2;
   /**
-   * Creates a new ConveyorIn.
+   * Creates a new ConveyorPIDTest.
    */
-  public ConveyorIn(conveyorPID conveyor) {
+  public ConveyorPIDTest(conveyorPID conveyor) {
     m_conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);
@@ -26,43 +27,30 @@ public class ConveyorIn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_conveyor.resetEncoder();
     m_conveyor.enable();
     m_conveyor.setIntake(m_conveyor.down);
-    System.out.println("Starting Step 2!");
+    m_conveyor.setSetpoint(-10.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_conveyor.getMeasurement() <= -8.99 || m_conveyor.mode != 2){
-      ender = true; 
-      if(m_conveyor.mode != 2){
-        System.out.println("Step 2 will finish because my mode is not 2! My mode is: " + m_conveyor.mode);
-      } else if(m_conveyor.getMeasurement() <= -8.99){
-        System.out.println("Step 2 will finish because I have reached my target!");
-      }
-    } else{
-      m_conveyor.setIntakeMotors(0.0);
-      m_conveyor.setSetpoint(-9);
-      System.out.println("I should have moved the conveyor out! I am still not close enough to my target! My error is: " + (9 + m_conveyor.getMeasurement()));
-    }
+    m_conveyor.setIntakeMotors(0.3);
+    System.out.println(m_conveyor.atSetpoint(tolerance, setpoint));
+    System.out.println("Error: " + (10.0 + m_conveyor.getMeasurement()));
   }
 
   // Called once the command ends or is interrupted.
   @Override
-public void end(boolean interrupted) {
-  if(m_conveyor.mode == 2){
-    m_conveyor.mode = 0; 
-    m_conveyor.resetEncoder();
-    m_conveyor.setSetpoint(0.0);
-    System.out.println("Step 2 has finished! My mode is now: " + m_conveyor.mode);
+  public void end(boolean interrupted) {
+    m_conveyor.setIntakeMotors(0.0);
+    //m_conveyor.disable();
   }
-  System.out.println("Step 2 has finished!");
-}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ender;
+    return m_conveyor.atSetpoint(tolerance, setpoint);
   }
 }
