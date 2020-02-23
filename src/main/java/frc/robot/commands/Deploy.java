@@ -30,6 +30,7 @@ public class Deploy extends CommandBase {
   @Override
   public void initialize() {
     //m_conveyor.setStopper(m_conveyor.open);
+    m_conveyor.disable();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -45,6 +46,8 @@ public class Deploy extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
+    m_conveyor.resetEncoder();
+    m_conveyor.mode = 0;
   }
 
   // Make this return true when this Command no longer needs to run execute()

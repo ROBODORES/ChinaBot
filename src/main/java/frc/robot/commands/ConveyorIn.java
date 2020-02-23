@@ -9,11 +9,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyorPID;
+import edu.wpi.first.wpilibj.Timer;
 
 public class ConveyorIn extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final conveyorPID m_conveyor;
-  private boolean ender = false;
+  private boolean ender;
+  private Timer timer;
+  private boolean fifthBall;
+  double target = -9.0;
   /**
    * Creates a new ConveyorIn.
    */
@@ -26,36 +30,45 @@ public class ConveyorIn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    ender = false;
+    fifthBall = false;
     m_conveyor.enable();
     m_conveyor.setIntake(m_conveyor.down);
     System.out.println("Starting Step 2!");
+    timer = new Timer();
+    if (m_conveyor.lastBall) target = -1.0;
+    else target = -9.0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_conveyor.getMeasurement() <= -8.99 || m_conveyor.mode != 2){
+    if(m_conveyor.getMeasurement() <= (target + 0.1) || m_conveyor.mode != 2){
       ender = true; 
       if(m_conveyor.mode != 2){
         System.out.println("Step 2 will finish because my mode is not 2! My mode is: " + m_conveyor.mode);
-      } else if(m_conveyor.getMeasurement() <= -8.99){
+      } else if(m_conveyor.getMeasurement() <= target + 0.1){
         System.out.println("Step 2 will finish because I have reached my target!");
       }
     } else{
-      m_conveyor.setIntakeMotors(0.0);
-      m_conveyor.setSetpoint(-9);
-      System.out.println("I should have moved the conveyor out! I am still not close enough to my target! My error is: " + (9 + m_conveyor.getMeasurement()));
+        m_conveyor.setIntakeMotors(0.0);
+        m_conveyor.setSetpoint(target);
+        System.out.println("I should have moved the conveyor out! I am still not close enough to my target! My error is: " + (9 + m_conveyor.getMeasurement()));
+      }
     }
-  }
 
   // Called once the command ends or is interrupted.
   @Override
 public void end(boolean interrupted) {
-  if(m_conveyor.mode == 2){
+  if(m_conveyor.mode == 2 && !interrupted){
     m_conveyor.mode = 0; 
+    if (m_conveyor.lastBall) {
+      m_conveyor.mode = 3;
+      m_conveyor.lastBall = false;
+    }
     m_conveyor.resetEncoder();
     m_conveyor.setSetpoint(0.0);
-    System.out.println("Step 2 has finished! My mode is now: " + m_conveyor.mode);
+    System.out.println("My mode is now: " + m_conveyor.mode);
   }
   System.out.println("Step 2 has finished!");
 }

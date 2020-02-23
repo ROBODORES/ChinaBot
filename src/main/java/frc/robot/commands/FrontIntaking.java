@@ -20,7 +20,7 @@ import frc.robot.RobotContainer;
 public class FrontIntaking extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final conveyorPID m_conveyor;
-  public boolean intaking = false;
+  public boolean intaking;
 
   /**
    * Creates a new Test.
@@ -38,6 +38,12 @@ public class FrontIntaking extends CommandBase {
     //m_conveyor.setStopper(m_conveyor.close);
     intaking = false;
     System.out.println("At the start!");
+    if (m_conveyor.getSensorInput2()) {
+      m_conveyor.lastBall = true;
+      System.out.println("Last Ball");
+    } else {
+      m_conveyor.lastBall = false;
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -56,11 +62,11 @@ public class FrontIntaking extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    if(m_conveyor.mode == 0){
+    if(m_conveyor.mode == 0 && !interrupted){
       m_conveyor.mode = 1; 
       m_conveyor.resetEncoder();
       m_conveyor.setSetpoint(0.0);
-      System.out.println("My mode is now: " + m_conveyor.mode + ". Finishing Step 0");
+      System.out.println("My mode is now: " + m_conveyor.mode);
     }else{
       System.out.println("Finishing step 0");
     }

@@ -44,18 +44,20 @@ public class conveyorPID extends PIDSubsystem {
   SpeedControllerGroup intakeMotors;
 
   Encoder conveyorEncoder;
-  DigitalInput infraredSensor;
+  DigitalInput infraredSensor1;
+  DigitalInput infraredSensor2;
 
   Timer timer;
 
-  static double kP = 0.35;
-  static double kI = 0.0;
-  static double kD = 0.0;
+  static double kP = 0.585;
+  static double kI = 0.0003;
+  static double kD = 0.00155;
 
   /**
    * Creates a new conveyorPID.
    */
   public int mode = 0;
+  public boolean lastBall = false;
 
   public conveyorPID() {
     super(
@@ -73,12 +75,13 @@ public class conveyorPID extends PIDSubsystem {
         leftIntakeMotor = new VictorSPX(Constants.leftIntakeMotor);
         leftIntakeMotor.setInverted(false);
         rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
-    
+
         conveyorEncoder = new Encoder(Constants.conveyorEncoderA, Constants.conveyorEncoderB);
     
         timer = new Timer();
-        infraredSensor= new DigitalInput(0);
-    
+        infraredSensor1= new DigitalInput(0);
+        infraredSensor2 = new DigitalInput(1);
+
         //bottomConveyorMotor.follow(topConveyorMotor);
         leftIntakeMotor.follow(rightIntakeMotor);
     
@@ -88,7 +91,12 @@ public class conveyorPID extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    double limiter = 1.0; 
+    double limiter = 1.0;
+    if(mode < 2) {
+      limiter = 0.3; 
+    } else{
+      limiter = 1.0;
+    }
     if(output > limiter){
       output = limiter;
     }
@@ -166,24 +174,31 @@ public class conveyorPID extends PIDSubsystem {
     conveyorEncoder.reset();
   }
 
-  public boolean getSensorInput(){
-    boolean feedback = infraredSensor.get();
+  public boolean getSensorInput1(){
+    boolean feedback = !infraredSensor1.get();
+    return feedback;
+  }
+
+  public boolean getSensorInput2(){
+    boolean feedback = !infraredSensor2.get();
     return feedback;
   }
 
   public boolean checker(){
-    if(getSensorInput() == true){
+    if(getSensorInput1() == !true){
       timer.reset();
     }
 
-    if(timer.get() > 0.5){
+    if(timer.get() > 0.1){
       return true;
     }
     return false;
   }
+
   public void setmode(int newMode){
-mode = newMode; 
+    mode = newMode; 
   }
+
   public int getMode(){
     return mode; 
   }

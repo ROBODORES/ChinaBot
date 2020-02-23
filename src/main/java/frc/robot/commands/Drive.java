@@ -41,8 +41,6 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     m_drivetrain.arcadeDrive(0.75 * RobotContainer.m_driverController.getRawAxis(1), 0.75 * RobotContainer.m_driverController.getRawAxis(4));
-    //System.out.println("Feedback: " + m_sensor.getSensorInput());
-    //System.out.println(", Distance: " + m_sensor.getDistance());
   }
   
   // Called once after isFinished returns true

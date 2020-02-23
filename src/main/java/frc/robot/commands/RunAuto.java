@@ -40,8 +40,8 @@ public class RunAuto extends CommandBase {
   @Override
   public void execute() {
     m_drivetrain.arcadeDrive(0.2, 0.0);
-    m_conveyor.getSensorInput();
-    if(m_conveyor.getSensorInput() != true){
+    m_conveyor.getSensorInput1();
+    if(m_conveyor.getSensorInput1() != true){
       m_drivetrain.arcadeDrive(0.0, 0.0);
       m_timer.start();
       m_conveyor.conveyorDeploy();

@@ -42,8 +42,8 @@ public final class Constants {
     public static int intakeSol = 3;
     public static int leftIntakeMotor = 3;
     public static int rightIntakeMotor = 0;
-    public static int conveyorEncoderA = 1;
-    public static int conveyorEncoderB = 2;
+    public static int conveyorEncoderA = 2;
+    public static int conveyorEncoderB = 3;
 
     //LEDs
     public static int blinkinPort = 0;
