@@ -40,8 +40,7 @@ public final class Constants {
     public static int topMotor = 1;
     public static int stopper = 2;
     public static int intakeSol = 3;
-    public static int leftIntakeMotor = 3;
-    public static int rightIntakeMotor = 0;
+    public static int intakeMotor = 4;
     public static int conveyorEncoderA = 2;
     public static int conveyorEncoderB = 3;
 

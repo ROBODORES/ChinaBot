@@ -15,12 +15,15 @@ public class Sensors extends SubsystemBase {
   /**
    * Creates a new UltrasonicSensor.
    */
-  //AnalogInput ultraSonicSensor;
+  AnalogInput ultraSonicSensor;
   
   public Sensors() {
-    //ultraSonicSensor = new AnalogInput(0);
+    ultraSonicSensor = new AnalogInput(0);
   }
 
+  public double getUSSensorVoltage(){
+    return ultraSonicSensor.getVoltage();
+  }
 
   @Override
   public void periodic() {

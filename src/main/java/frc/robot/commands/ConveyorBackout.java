@@ -13,7 +13,10 @@ import frc.robot.subsystems.conveyorPID;
 public class ConveyorBackout extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final conveyorPID m_conveyor; 
-  private boolean ender; 
+  private boolean ender;
+  double target = 0.5;
+  double tolerance = 0.1; 
+  int modenum = 1;
   /**
    * Creates a new ConveyorBackout.
    */
@@ -37,16 +40,16 @@ public class ConveyorBackout extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_conveyor.getMeasurement() >= 0.4 || m_conveyor.mode != 1){
+    if(m_conveyor.getMeasurement() >= (target - tolerance) || m_conveyor.mode != modenum){
       ender = true; 
-      if(m_conveyor.mode != 1){
+      if(m_conveyor.mode != modenum){
         System.out.println("Step 1 will finish because my mode is not 1! My mode is: " + m_conveyor.mode);
-      } else if(m_conveyor.getMeasurement() >= 0.4){
+      } else if(m_conveyor.getMeasurement() >= (target - tolerance)){
         System.out.println("Step 1 will finish because I have reached my target!");
       }
     } else{
-      m_conveyor.setIntakeMotors(0.05);
-      m_conveyor.setSetpoint(0.5);
+      m_conveyor.setIntakeMotors(0.0);
+      m_conveyor.setSetpoint(target);
       System.out.println("I should have moved the conveyor out! I am still not close enough to my target! My error is: " + (0.5 - m_conveyor.getMeasurement()));
     }
     
@@ -55,7 +58,7 @@ public class ConveyorBackout extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(m_conveyor.mode == 1 && !interrupted){
+    if(m_conveyor.mode == modenum && !interrupted){
       m_conveyor.mode = 2; 
       m_conveyor.resetEncoder();
       m_conveyor.setSetpoint(0.0);

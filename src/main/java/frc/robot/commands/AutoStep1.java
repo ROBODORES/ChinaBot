@@ -8,41 +8,62 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.conveyorPID;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Sensors;
+import edu.wpi.first.wpilibj.Timer;
 
-public class Climb extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final Climber m_climber;
+public class AutoStep1 extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private Drivetrain m_drivetrain;
+  private Sensors m_sensor;
+  private boolean hitWall;
+  private boolean ender;
   /**
-   * Creates a new Climb.
+   * Creates a new RunAuto.
    */
-  public Climb(Climber climber) {
-    m_climber = climber;
+  public AutoStep1(Drivetrain drivetrain, Sensors sensor) {
+    m_drivetrain = drivetrain;
+    m_sensor = sensor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    addRequirements(drivetrain);
+    addRequirements(sensor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    hitWall = false;
+    ender = false;
+    System.out.println("First Step Starting!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climber.neutralize();
-    m_climber.setClimbMotors(1.0);
+    m_drivetrain.arcadeDrive(-0.4, 0.0);
+    System.out.println("I should be driving!");
+    if(m_sensor.getUSSensorVoltage() < 0.3){
+      hitWall = true;
+    }
+    if(hitWall){
+      m_drivetrain.arcadeDrive(0.0, 0.0);
+      System.out.println("I should have stopped!");
+      ender = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climber.setClimbMotors(0.0);
+    ender = false;
+    hitWall = false;
+    System.out.println("First Step Done!");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return ender;
   }
 }

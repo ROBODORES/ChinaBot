@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -40,7 +39,11 @@ public class Drive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(0.75 * RobotContainer.m_driverController.getRawAxis(1), 0.75 * RobotContainer.m_driverController.getRawAxis(4));
+    double buffer = 0.005;//0.05
+    double minSpeed = 0.2;//0.2
+    double throttleLimit = 1.0;
+    double twistLimit = 1.0;
+    m_drivetrain.exponentialDrive(-RobotContainer.m_driverController.getRawAxis(1), RobotContainer.m_driverController.getRawAxis(4), buffer, minSpeed, throttleLimit, twistLimit);
   }
   
   // Called once after isFinished returns true

@@ -7,7 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyorPID;
 import frc.robot.subsystems.Drivetrain;
@@ -21,6 +21,7 @@ public class FrontIntaking extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final conveyorPID m_conveyor;
   public boolean intaking;
+  int modenum = 0;
 
   /**
    * Creates a new Test.
@@ -49,20 +50,21 @@ public class FrontIntaking extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    if(m_conveyor.checker() == true || m_conveyor.mode != 0){
-      if(m_conveyor.mode != 0){
-        System.out.println("Step 1 has finished because my mode isnt 0. My mode is: " + m_conveyor.mode);
+    if(m_conveyor.checker() == true || m_conveyor.mode != modenum){
+      if(m_conveyor.mode != modenum){
+        System.out.println("Step 0 has finished because my mode isnt 0. My mode is: " + m_conveyor.mode);
       }
       intaking = true;
     } else{
       m_conveyor.setIntakeMotors(0.3);
+      System.out.println("Front Intake Speed: " + RobotContainer.m_mechController.getTriggerAxis(Hand.kRight));
     }
   }
 
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    if(m_conveyor.mode == 0 && !interrupted){
+    if(m_conveyor.mode == modenum && !interrupted){
       m_conveyor.mode = 1; 
       m_conveyor.resetEncoder();
       m_conveyor.setSetpoint(0.0);

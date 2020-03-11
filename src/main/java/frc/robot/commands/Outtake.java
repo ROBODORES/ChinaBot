@@ -7,7 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyorPID;
 import frc.robot.Robot;
@@ -16,7 +16,6 @@ import frc.robot.Robot;
 public class Outtake extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final conveyorPID m_conveyor;
-
   /**
    * Creates a new Test.
    */

@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.Constants;
@@ -17,11 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.Timer;
-
-import com.kauailabs.navx.frc.AHRS;
-
 
   /**
    * Creates a new ConveyorPID.
@@ -37,8 +34,7 @@ public class conveyorPID extends PIDSubsystem {
   SpeedControllerGroup conveyorMotors;
 
   Solenoid intakeSol;
-  VictorSPX leftIntakeMotor;
-  VictorSPX rightIntakeMotor;
+  TalonFX intakeMotor;
   public static boolean up = false;
   public static boolean down = true;
   SpeedControllerGroup intakeMotors;
@@ -72,9 +68,8 @@ public class conveyorPID extends PIDSubsystem {
         stopper = new Solenoid(Constants.stopper);
     
         intakeSol = new Solenoid(Constants.intakeSol);
-        leftIntakeMotor = new VictorSPX(Constants.leftIntakeMotor);
-        leftIntakeMotor.setInverted(false);
-        rightIntakeMotor = new VictorSPX(Constants.rightIntakeMotor);
+        intakeMotor = new TalonFX(Constants.intakeMotor);
+        intakeMotor.setInverted(true);
 
         conveyorEncoder = new Encoder(Constants.conveyorEncoderA, Constants.conveyorEncoderB);
     
@@ -83,20 +78,18 @@ public class conveyorPID extends PIDSubsystem {
         infraredSensor2 = new DigitalInput(1);
 
         //bottomConveyorMotor.follow(topConveyorMotor);
-        leftIntakeMotor.follow(rightIntakeMotor);
     
         timer.start();
-        
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
     double limiter = 1.0;
-    if(mode < 2) {
+    /*if(mode < 2) {
       limiter = 0.3; 
     } else{
       limiter = 1.0;
-    }
+    }*/
     if(output > limiter){
       output = limiter;
     }
@@ -162,7 +155,7 @@ public class conveyorPID extends PIDSubsystem {
   }
 
   public void setIntakeMotors(double speed){
-    rightIntakeMotor.set(ControlMode.PercentOutput, speed);
+    intakeMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public int getConveyorEncoderDistance(){
@@ -189,7 +182,7 @@ public class conveyorPID extends PIDSubsystem {
       timer.reset();
     }
 
-    if(timer.get() > 0.1){
+    if(timer.get() > 0.0075){
       return true;
     }
     return false;

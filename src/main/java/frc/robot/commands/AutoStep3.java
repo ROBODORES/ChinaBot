@@ -8,36 +8,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.conveyorPID;
 
-public class Climb extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final Climber m_climber;
+public class AutoStep3 extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  conveyorPID m_conveyor;
   /**
-   * Creates a new Climb.
+   * Creates a new AutoStep3.
    */
-  public Climb(Climber climber) {
-    m_climber = climber;
+  public AutoStep3(conveyorPID conveyor) {
+    m_conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Step 3 starting!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climber.neutralize();
-    m_climber.setClimbMotors(1.0);
+    m_conveyor.conveyorStop();
+    System.out.println("Conveyor should have stopped!");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climber.setClimbMotors(0.0);
   }
 
   // Returns true when the command should end.

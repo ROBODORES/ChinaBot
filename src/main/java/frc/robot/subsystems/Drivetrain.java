@@ -55,6 +55,36 @@ public class Drivetrain extends SubsystemBase {
     differentialDrive.arcadeDrive(throttleSpeed, turnSpeed);
   }
 
+  public void exponentialDrive(double drive, double turningAdjust, double bufferZone, double minSpeed, double throttleLimiter, double twistLimiter){
+    if(drive > 1.0){
+      drive = 1.0;
+    } else if(drive < -1.0){
+      drive = -1.0;
+    }
+     
+    if(turningAdjust> 1.0){
+      turningAdjust = 1.0;
+    } else if(turningAdjust < -1.0){
+      turningAdjust = -1.0;
+    }
+    
+    double throttleSpeed = mapToExp(drive, bufferZone, minSpeed);
+    double twistSpeed = mapToExp(turningAdjust, bufferZone, minSpeed);
+
+    differentialDrive.arcadeDrive(throttleLimiter * throttleSpeed, twistLimiter * twistSpeed);
+
+  }
+
+  public double mapToExp(double val, double bufferZone, double minSpeed) {
+    double returnVal = 0.0;
+    if (val >= bufferZone) {
+      returnVal = (1.0 - minSpeed)*Math.pow(val, 3) + minSpeed;
+    } else if (val <= -bufferZone) {
+      returnVal = (1.0 - minSpeed)*Math.pow(val, 3) - minSpeed;
+    }
+    return returnVal;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

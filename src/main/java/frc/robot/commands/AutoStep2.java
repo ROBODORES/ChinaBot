@@ -7,59 +7,54 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyorPID;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Sensors;
-import edu.wpi.first.wpilibj.Timer;
 
-public class RunAuto extends CommandBase {
+public class AutoStep2 extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private Drivetrain m_drivetrain;
   private conveyorPID m_conveyor;
-  private double targetVolts = 0.5;
-  //private double wiggleRoom = 0.1;
-  private Timer m_timer;
+  private Timer m_timer = new Timer();
+  private boolean ender;
   /**
-   * Creates a new RunAuto.
+   * Creates a new RunAuto2.
    */
-  public RunAuto(Drivetrain drivetrain, conveyorPID conveyor) {
-    m_drivetrain = drivetrain;
+  public AutoStep2(conveyorPID conveyor) {
     m_conveyor = conveyor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
     addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_timer.reset();
+    ender = false;
+    System.out.println("Second Step Starting!");
+    m_timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(0.2, 0.0);
-    m_conveyor.getSensorInput1();
-    if(m_conveyor.getSensorInput1() != true){
-      m_drivetrain.arcadeDrive(0.0, 0.0);
-      m_timer.start();
-      m_conveyor.conveyorDeploy();
+    m_conveyor.conveyorDeploy();
+    System.out.println("Conveyor should be deploying!");
+    if(m_timer.get() > 3.0) {
+      ender = true;
+      System.out.println("Conveyor should have ran for 3 seconds!");
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    ender = false;
+    System.out.println("Step 2 finished!");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_timer.get() >= 5){
-      m_conveyor.setConveyorMotors(0.0, 0.0);
-      return true;
-    }
-    return false;
+    return ender;
   }
 }

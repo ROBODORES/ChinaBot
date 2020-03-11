@@ -7,8 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.conveyorPID;
@@ -40,7 +39,6 @@ public class Deploy extends CommandBase {
     //m_conveyor.setConveyorMotors(1.0);
     m_conveyor.conveyorDeploy();
     m_conveyor.setIntakeMotors(0.0);
-    //System.out.println("Feedback: " + m_conveyor.getConveyorEncoderDistance());
   }
 
   // Called once after isFinished returns true

@@ -44,9 +44,10 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   //private final LEDs m_LEDs = new LEDs();
   private final Sensors m_sensor = new Sensors();
+  private final Limelight m_limelight = new Limelight();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final RunAuto m_auto = new RunAuto(m_drivetrain, m_conveyor);
+  private final Auto m_auto = new Auto(m_drivetrain, m_conveyor, m_sensor);
 
   public static XboxController m_driverController = new XboxController(0);
   public static XboxController m_mechController = new XboxController(1);
@@ -60,6 +61,7 @@ public class RobotContainer {
   private static JoystickButton liftButton = new JoystickButton(m_mechController, Button.kB.value);
   //private static JoystickButton resetEncoderButton = new JoystickButton(m_mechController, Button.kStickLeft.value);
   private static JoystickButton PIDTestButton = new JoystickButton(m_mechController, Button.kStickLeft.value);
+  private static JoystickButton AutoDriveButton = new JoystickButton(m_driverController, Button.kB.value);
 
 
   /**
@@ -91,6 +93,7 @@ public class RobotContainer {
     liftButton.whileHeld(new Climb(m_climber));
     //resetEncoderButton.whenPressed(new ResetConveyorEncoder(m_conveyor));
     PIDTestButton.whenPressed(new ConveyorPIDTest(m_conveyor));
+    AutoDriveButton.whileHeld(new AutoDrive(m_drivetrain, m_limelight));
   }
 
 
@@ -101,6 +104,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_auto;
   }
 }

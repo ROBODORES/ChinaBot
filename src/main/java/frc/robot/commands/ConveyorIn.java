@@ -18,6 +18,8 @@ public class ConveyorIn extends CommandBase {
   private Timer timer;
   private boolean fifthBall;
   double target = -9.0;
+  double tolerance = 0.1;
+  int modenum = 2;
   /**
    * Creates a new ConveyorIn.
    */
@@ -34,21 +36,21 @@ public class ConveyorIn extends CommandBase {
     fifthBall = false;
     m_conveyor.enable();
     m_conveyor.setIntake(m_conveyor.down);
-    System.out.println("Starting Step 2!");
+    System.out.println("Starting Step 3!");
     timer = new Timer();
     if (m_conveyor.lastBall) target = -1.0;
-    else target = -9.0;
+    else target = -8.5;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_conveyor.getMeasurement() <= (target + 0.1) || m_conveyor.mode != 2){
+    if(m_conveyor.getMeasurement() <= (target + tolerance) || m_conveyor.mode != modenum){
       ender = true; 
-      if(m_conveyor.mode != 2){
-        System.out.println("Step 2 will finish because my mode is not 2! My mode is: " + m_conveyor.mode);
-      } else if(m_conveyor.getMeasurement() <= target + 0.1){
-        System.out.println("Step 2 will finish because I have reached my target!");
+      if(m_conveyor.mode != modenum){
+        System.out.println("Step 3 will finish because my mode is not 3! My mode is: " + m_conveyor.mode);
+      } else if(m_conveyor.getMeasurement() <= (target + tolerance)){
+        System.out.println("Step 3 will finish because I have reached my target!");
       }
     } else{
         m_conveyor.setIntakeMotors(0.0);
@@ -60,17 +62,17 @@ public class ConveyorIn extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
 public void end(boolean interrupted) {
-  if(m_conveyor.mode == 2 && !interrupted){
+  if(m_conveyor.mode == modenum && !interrupted){
     m_conveyor.mode = 0; 
     if (m_conveyor.lastBall) {
-      m_conveyor.mode = 3;
+      m_conveyor.mode = 4;
       m_conveyor.lastBall = false;
     }
     m_conveyor.resetEncoder();
     m_conveyor.setSetpoint(0.0);
     System.out.println("My mode is now: " + m_conveyor.mode);
   }
-  System.out.println("Step 2 has finished!");
+  System.out.println("Step 3 has finished!");
 }
 
   // Returns true when the command should end.

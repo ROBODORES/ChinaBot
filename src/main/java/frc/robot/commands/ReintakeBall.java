@@ -7,42 +7,60 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import edu.wpi.first.wpilibj.Timer;
 
-public class Climb extends CommandBase {
-  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final Climber m_climber;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.conveyorPID;
+
+public class ReintakeBall extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final conveyorPID m_conveyor;
+  private Timer time = new Timer();
+  boolean ender = false;
   /**
-   * Creates a new Climb.
+   * Creates a new ReintakeBall.
    */
-  public Climb(Climber climber) {
-    m_climber = climber;
+  public ReintakeBall(conveyorPID conveyor) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    m_conveyor = conveyor; 
+    addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    time.reset();
+    time.start();
+    ender = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climber.neutralize();
-    m_climber.setClimbMotors(1.0);
+      if (time.get() >= 0.1 || m_conveyor.mode != 2) {
+        m_conveyor.setIntakeMotors(0.0);
+        ender = true;
+      } else {
+        m_conveyor.setIntakeMotors(0.3);
+      }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climber.setClimbMotors(0.0);
+    time.stop();
+    if(m_conveyor.mode == 2 && !interrupted){
+      m_conveyor.mode = 3; 
+      m_conveyor.resetEncoder();
+      m_conveyor.setSetpoint(0.0);
+      System.out.println("Step 2 Finished! My mode is now: " + m_conveyor.mode);
+    }
+    System.out.println("Step 2 Finished!");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return ender;
   }
 }
