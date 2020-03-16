@@ -51,5 +51,5 @@ public class Intake extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-}
+  }}
+

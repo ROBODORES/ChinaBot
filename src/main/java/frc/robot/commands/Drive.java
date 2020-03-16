@@ -15,7 +15,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class Drive extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-  private final Drivetrain m_drivetrain;
+  public final Drivetrain m_drivetrain;
 
   /**
    * Creates a new Test.

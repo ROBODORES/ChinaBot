@@ -59,34 +59,39 @@ public final class Constants {
     public static int rightClimbSEncoderB = 3;
 
 
-}
+
 
     //Trajectories 
-    // public static final double kTrackwidthMeters =
-    //public static final DifferentialDriveKinematics kDriveKinematics =
-            //new DifferentialDriveKinematics(kTrackwidthMeters);
+   public static final double TrackwidthMeters = 23.79; 
+   public static final DifferentialDriveKinematics kDriveKinematics =
+        new DifferentialDriveKinematics(TrackwidthMeters);
             
        
 
-       // public static final double WheelDiameterMeters = 0.;
-       // public static final double LeftEncoderPulsesPerRev = ; //
-        //public static final double RightEncoderPulsesPerRev = ; 
-        //public static final double LeftMetersPerPulse = Math.PI * kWheelDiameterMeters / kLeftEncoderPulsesPerRev;
-        //public static final double RightMetersPerPulse = Math.PI * kWheelDiameterMeters / kRightEncoderPulsesPerRev;
+        public static final double WheelDiameterMeters = 0.1524;
+        public static final double LeftEncoderPulsesPerRev = 4096 ; //
+        public static final double RightEncoderPulsesPerRev = 4096 ; 
+        public static final double LeftSlaveEncoderPulsesPerRev = 4096;
+        public static final double RightSlaveEncoderPulsesPerRev = 4096;  
+        public static final double LeftMetersPerPulse = Math.PI * WheelDiameterMeters / LeftEncoderPulsesPerRev;
+        public static final double RightMetersPerPulse = Math.PI * WheelDiameterMeters / RightEncoderPulsesPerRev;
+        public static final double LeftSlaveMetersPerPulse = Math.PI * WheelDiameterMeters / LeftSlaveEncoderPulsesPerRev; 
+        public static final double RightSlaveMetersPerPulse = Math.PI * WheelDiameterMeters / RightSlaveEncoderPulsesPerRev; 
+        public static final double MaxSpeedMetersPerSecond = 0.2; 
+        public static final double MaxAccelerationMetersPerSecondSquared = 3; 
 
-       // public static final boolean kGyroReversed = true; // For NavX
+        public static final boolean GyroReversed = true;
 
-        /*public static final double ksVolts = 0.;
-        public static final double kvVoltSecondsPerMeter = ;
-        public static final double kaVoltSecondsSquaredPerMeter = ;
-        // Example value only - as above, this must be tuned for your drive!
-        public static final double kPDriveVel =; 
+        public static final double ksVolts = 0.298; //not inverted. Inverted = 3.3557
+        public static final double kvVoltSecondsPerMeter = 0.0449 ; //not inverted. Inverted = 22.2717
+        public static final double kaVoltSecondsSquaredPerMeter = 0.00551 ; //not inverted. Inverted = 181.4882
+        public static final double kPDriveVel = 0.0004; // with unit as inches = 0.254
     
-        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+        //  baseline values for a RAMSETE follower in units m/s
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7; }
-    }
-}
-    */
+    
+
+    
 
 

@@ -23,12 +23,12 @@ public class NavX extends SubsystemBase {
   /**
    * Creates a new NavX.
    */
- /* public NavX(){
-    ahrs = new AHRS(SPI.Port.kMXP);
-    ahrs.resetDisplacement();
-    ahrs.reset();
-   angle = ahrs.getYaw(); // defining variable for gyro
-    // init for navX imu */
+ //public NavX(){
+   // ahrs = new AHRS(SPI.Port.kMXP);
+    //ahrs.resetDisplacement();
+    //ahrs.reset();
+   //angle = ahrs.getYaw(); // defining variable for gyro
+    // init for navX imu 
  
 
   
