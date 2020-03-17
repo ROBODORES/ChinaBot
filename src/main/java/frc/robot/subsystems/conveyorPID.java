@@ -53,6 +53,7 @@ public class conveyorPID extends PIDSubsystem {
    * Creates a new conveyorPID.
    */
   public int mode = 0;
+  public int runs = 0;
   public boolean lastBall = false;
 
   public conveyorPID() {

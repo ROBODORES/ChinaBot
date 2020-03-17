@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.conveyorPID;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -20,13 +22,19 @@ public class ConveyorIn extends CommandBase {
   double target = -9.0;
   double tolerance = 0.1;
   int modenum = 2;
+  private Auto m_auto;
+  private Intake m_intake;
+  private Drivetrain m_drivetrain = new Drivetrain();
+  private Sensors m_sensor;
   /**
    * Creates a new ConveyorIn.
    */
-  public ConveyorIn(conveyorPID conveyor) {
+  public ConveyorIn(conveyorPID conveyor, Sensors sensor) {
     m_conveyor = conveyor;
+    m_sensor = sensor;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);
+    addRequirements(sensor);
   }
 
   // Called when the command is initially scheduled.
@@ -37,7 +45,10 @@ public class ConveyorIn extends CommandBase {
     m_conveyor.enable();
     m_conveyor.setIntake(m_conveyor.down);
     System.out.println("Starting Step 3!");
+    System.out.println("Runs is: " + m_conveyor.runs);
     timer = new Timer();
+    m_auto = new Auto(m_drivetrain, m_conveyor, m_sensor);
+    m_intake = new Intake(m_conveyor, m_sensor);
     if (m_conveyor.lastBall) target = -1.0;
     else target = -8.5;
   }
@@ -70,9 +81,18 @@ public void end(boolean interrupted) {
     }
     m_conveyor.resetEncoder();
     m_conveyor.setSetpoint(0.0);
-    System.out.println("My mode is now: " + m_conveyor.mode);
+    System.out.println("My mode is now: " + m_conveyor.mode + "!");
   }
   System.out.println("Step 3 has finished!");
+  if(m_conveyor.runs == 1){
+    m_auto.schedule();
+    m_conveyor.runs = 2;
+    System.out.println("Run was 1, so Auto was scheduled! Runs is: " + m_conveyor.runs);
+  }else if(m_conveyor.runs == 0){
+    m_conveyor.runs = 1;
+    m_intake.schedule();
+    System.out.println("Run was 0, so Intake was scheduled! Run is now: " + m_conveyor.runs);
+  }
 }
 
   // Returns true when the command should end.

@@ -57,7 +57,6 @@ public class FrontIntaking extends CommandBase {
       intaking = true;
     } else{
       m_conveyor.setIntakeMotors(0.3);
-      System.out.println("Front Intake Speed: " + RobotContainer.m_mechController.getTriggerAxis(Hand.kRight));
     }
   }
 

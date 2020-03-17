@@ -47,7 +47,7 @@ public class RobotContainer {
   private final Limelight m_limelight = new Limelight();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final Auto m_auto = new Auto(m_drivetrain, m_conveyor, m_sensor);
+  private final DriveBackAndIntake m_auto = new DriveBackAndIntake(m_drivetrain, m_conveyor, m_sensor);
 
   public static XboxController m_driverController = new XboxController(0);
   public static XboxController m_mechController = new XboxController(1);
@@ -82,7 +82,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    intakeButton.whileHeld(new Intake(m_conveyor)); //Intake
+    intakeButton.whileHeld(new Intake(m_conveyor, m_sensor)); //Intake
     intakeButton.whenReleased(new Stop(m_conveyor));
     outtakeButton.whenPressed(new Outtake(m_conveyor)); //Outtake
     outtakeButton.whenReleased(new Stop(m_conveyor));

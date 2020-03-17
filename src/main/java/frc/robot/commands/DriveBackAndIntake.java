@@ -7,20 +7,21 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.conveyorPID;
+
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class Intake extends SequentialCommandGroup {
+public class DriveBackAndIntake extends ParallelCommandGroup {
   /**
-   * Creates a new Intake.
+   * Creates a new DriveBackAndIntake.
    */
-  public Intake(conveyorPID m_conveyor, Sensors m_sensor) {
+  public DriveBackAndIntake(Drivetrain drivetrain, conveyorPID conveyor, Sensors sensor) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super( new FrontIntaking(m_conveyor), new ConveyorBackout(m_conveyor), /*new ReintakeBall(m_conveyor), */new ConveyorIn(m_conveyor, m_sensor));
+    super(new DriveBack(drivetrain), new Intake(conveyor, sensor));
   }
 }
